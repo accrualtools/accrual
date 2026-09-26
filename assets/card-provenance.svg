@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="npm audit signatures on accrual 0.1.1 reports both a verified registry signature and a verified attestation, because GitHub signed which commit and workflow built the tarball into a public transparency log">
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+
+  <text x="96" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87" letter-spacing="3">THE ONE CLAIM YOU CANNOT CHECK BY READING THE SOURCE</text>
+
+  <text x="96" y="196" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="50" fill="#D8E0DD">Trusting me is</text>
+  <text x="96" y="262" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="50" fill="#B8FF3C">now optional.</text>
+
+  <line x1="96" y1="314" x2="1504" y2="314" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- Real output from a cold-cache install. Nothing here is illustrative. -->
+  <text x="96" y="372" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="23" fill="#7B8B87" letter-spacing="2">FROM A CLEAN INSTALL, NOT FROM THIS REPO</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26">
+    <text x="96" y="424" fill="#7B8B87">$ npm audit signatures</text>
+    <text x="96" y="470" fill="#D8E0DD">1 package has a verified registry signature</text>
+    <text x="96" y="512" fill="#B8FF3C">1 package has a verified attestation</text>
+  </g>
+
+  <!-- What the second line buys a reader that the first one does not. -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24">
+    <text x="96" y="590" fill="#7B8B87">signature</text>
+    <text x="330" y="590" fill="#D8E0DD">the registry vouches the bytes arrived unaltered</text>
+
+    <text x="96" y="634" fill="#7B8B87">attestation</text>
+    <text x="330" y="634" fill="#B8FF3C">GitHub signed which commit and workflow built them</text>
+  </g>
+
+  <text x="96" y="702" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#D8E0DD">The source you read and the tarball you installed are now the</text>
+  <text x="96" y="740" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#D8E0DD">same thing, and you check that yourself in about a second.</text>
+
+  <rect x="96" y="790" width="1408" height="2" fill="#1E2826"/>
+
+  <text x="96" y="848" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">accrual 0.1.1 &#183; public transparency log &#183; sigstore logIndex 2968491932</text>
+  <text x="1504" y="848" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#B8FF3C">accrual</text>
+</svg>

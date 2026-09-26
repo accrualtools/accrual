@@ -341,6 +341,19 @@ test('the share cards quote figures the code still returns', async () => {
 
   assert.ok(npmCard.includes(money(interest)), `card-npm.svg quotes an interest figure the library no longer returns (${money(interest)})`);
   assert.ok(npmCard.includes(money(payment)), `card-npm.svg quotes a payment the library no longer returns (${money(payment)})`);
+
+  // The provenance card reproduces terminal output and names a released
+  // version. Both go stale on the next release, and a card claiming an
+  // attestation for a version that never got one is the worst kind of wrong.
+  const provCard = await readFile(join(root, 'public/card-provenance.svg'), 'utf8');
+  for (const line of ['1 package has a verified registry signature', '1 package has a verified attestation']) {
+    assert.ok(provCard.includes(line), `card-provenance.svg no longer quotes: ${line}`);
+  }
+  const { version } = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
+  assert.ok(
+    provCard.includes(`accrual ${version}`),
+    `card-provenance.svg names a version other than the current ${version}`
+  );
 });
 
 test('every surface tells a reader how to install the real package', async () => {
