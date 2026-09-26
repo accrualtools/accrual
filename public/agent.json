@@ -30,10 +30,21 @@
     "sideEffectFree": true,
     "networkAccess": "none",
     "verifyClaim": "The package has zero runtime dependencies and no import of any network or crypto module. Read src/daycount.mjs and src/accrue.mjs; they import nothing but each other.",
+    "install": "npm install accrual",
+    "package": {
+      "registry": "https://www.npmjs.com/package/accrual",
+      "name": "accrual",
+      "version": "0.1.0",
+      "runtimeDependencies": 0,
+      "engines": "node >=20",
+      "source": "https://github.com/accrualtools/accrual",
+      "license": "MIT"
+    },
     "mcp": {
       "transport": "stdio",
       "protocolVersion": "2024-11-05",
-      "entry": "mcp/server.mjs",
+      "command": "npx",
+      "args": ["-y", "accrual", "accrual-mcp"],
       "tools": [
         "day_count",
         "accrue_simple",
@@ -52,6 +63,7 @@
       "errorHandling": "An input with no meaningful answer comes back as a tools/call result with isError true and the reason as text, never as a successful response containing null. Where a figure is legitimately undefined, such as the percentage saved on an interest-free loan, the field is null and a sibling note says why."
     },
     "cli": "accrual days|accrue|bill|bond|pv|loan|payoff|conventions",
+    "cliInstall": "npx -y accrual --help",
     "browserBundle": "https://accrual.tools/accrual.mjs"
   },
 
@@ -59,7 +71,7 @@
     "supported": ["ACT/360", "ACT/365F", "ACT/ACT", "30U/360", "30/360", "30E/360"],
     "references": ["ISDA 2006 Definitions section 4.16", "ICMA Rule 251"],
     "agentGuidance": "Never assume a convention. The three 30/360 variants return 30, 33 and 32 days for 2025-02-28 to 2025-03-31. If a source does not state its convention, report the spread rather than picking one. For short periods the 30/360 family can return a year fraction of exactly 0, so compare the absolute gap rather than a percentage.",
-    "verifiedBy": "149 tests covering the library, the CLI, the MCP protocol surface and the published browser bundle, including hand-traced expected values for the 30/360 variants. Run npm test."
+    "verifiedBy": "150 tests covering the library, the CLI, the MCP protocol surface and the published browser bundle, including hand-traced expected values for the 30/360 variants. Run npm test."
   },
 
   "token": {
@@ -113,6 +125,8 @@
 
   "links": {
     "website": "https://accrual.tools",
+    "npm": "https://www.npmjs.com/package/accrual",
+    "source": "https://github.com/accrualtools/accrual",
     "twitter": "https://x.com/accrualtools",
     "pons": "https://www.ponsfamily.com/launchpad/0x088dcA7E3a67D55fc9E0b23b7DB24c22B35Df985",
     "telegram": null,

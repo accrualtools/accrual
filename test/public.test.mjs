@@ -192,3 +192,35 @@ test('every buy link points at this token, not at the launchpad index', async ()
     }
   }
 });
+
+test('every surface tells a reader how to install the real package', async () => {
+  // For a while the site published an MCP config and a shell transcript for a
+  // package that was not on the registry, so following the instructions gave a
+  // 404. The install line is the first thing a stranger runs; if it names the
+  // wrong package or goes missing, nothing else on the page can be reached.
+  const pkg = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
+
+  for (const rel of ['public/index.html', 'public/llms.txt', 'public/agent.json', 'README.md']) {
+    const text = await readFile(join(root, rel), 'utf8');
+    assert.match(
+      text,
+      new RegExp(`npm install ${pkg.name}\\b`),
+      `${rel} never tells a reader to install ${pkg.name}`
+    );
+    assert.ok(
+      text.includes(`npmjs.com/package/${pkg.name}`),
+      `${rel} does not link to the registry page for ${pkg.name}`
+    );
+  }
+
+  // The MCP snippet has to name the published bin, not a path inside the repo:
+  // a relative entry only resolves for someone who already cloned the source.
+  const agent = JSON.parse(await readFile(join(root, 'public/agent.json'), 'utf8'));
+  assert.deepEqual(agent.tool.mcp.args, ['-y', pkg.name, 'accrual-mcp']);
+  assert.ok(
+    Object.hasOwn(pkg.bin, agent.tool.mcp.args.at(-1)),
+    'agent.json points at an MCP bin the package does not publish'
+  );
+  assert.equal(agent.tool.package.version, pkg.version, 'agent.json advertises a stale version');
+  assert.equal(agent.tool.package.source, pkg.repository.url.replace(/^git\+|\.git$/g, ''));
+});

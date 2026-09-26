@@ -174,7 +174,7 @@
       <div><dt>conventions implemented</dt><dd>6</dd></div>
       <div><dt>30/360 variants</dt><dd>3, not interchangeable</dd></div>
       <div><dt>runtime dependencies</dt><dd>0</dd></div>
-      <div><dt>tests passing</dt><dd>149 / 149</dd></div>
+      <div><dt>tests passing</dt><dd>150 / 150</dd></div>
     </dl>
   </div>
 </section>
@@ -275,6 +275,34 @@
 
 <section>
   <div class="wrap">
+    <h2>install</h2>
+    <p class="sub">
+      One package, no dependencies. <code>npm install accrual</code> adds exactly one
+      entry to your tree, which you can check yourself. Node 20 or newer.
+    </p>
+    <div class="stack">
+<pre>$ npm install accrual
+added 1 package</pre>
+<pre><span class="c">// the same numbers the calculator above runs on</span>
+<span class="k">import</span> { accrueSimple, bondMetrics } <span class="k">from</span> <span class="k">'accrual'</span>;
+
+accrueSimple({
+  principal: 1_000_000,
+  rate: 0.0525,
+  from: <span class="k">'2025-01-31'</span>,
+  to: <span class="k">'2025-07-31'</span>,
+  convention: <span class="k">'ACT/365F'</span>,
+});  <span class="c">// interest 26034.25</span></pre>
+    </div>
+    <nav class="links">
+      <a href="https://www.npmjs.com/package/accrual">npm / accrual</a>
+      <a href="https://github.com/accrualtools/accrual">source on github</a>
+    </nav>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
     <h2>for agents</h2>
     <p class="sub">
       The same math as an MCP server over stdio, thirteen tools. It is a pure function
@@ -314,6 +342,7 @@ $ accrual payoff --principal 200000 --rate 6% --years 30 --extra 200</pre>
       <a href="/llms.txt">llms.txt</a>
       <a href="/accrual.mjs">accrual.mjs</a>
       <a href="/mcp.mjs">mcp server</a>
+      <a href="https://www.npmjs.com/package/accrual">npm / accrual</a>
     </nav>
   </div>
 </section>

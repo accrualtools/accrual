@@ -3,8 +3,19 @@
 Yield math for tokenized real-world assets. A library, a CLI, and an MCP server.
 
 Site: https://accrual.tools
+Package: https://www.npmjs.com/package/accrual
+Source: https://github.com/accrualtools/accrual
 Token: ACCR on pons v2, Robinhood Chain
 Contract address: 0x088dcA7E3a67D55fc9E0b23b7DB24c22B35Df985
+
+## How to get it
+
+    npm install accrual          # library, zero dependencies, Node >=20
+    npx -y accrual --help        # the CLI, without installing
+    npx -y accrual accrual-mcp   # the MCP server over stdio, 13 tools
+
+MIT licensed. Installing it adds exactly one entry to your dependency tree,
+which is the claim you can check fastest.
 
 ## What this is
 
@@ -74,7 +85,7 @@ a sibling note says why.
 
 ## Verification
 
-149 tests. Run `npm test`.
+150 tests. Run `npm test`.
 
 The library: hand-traced expected values for the 30/360 variants, round-trip
 checks between accrual and present value, a check that convexity genuinely

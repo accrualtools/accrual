@@ -10,7 +10,11 @@ returns numbers. Zero runtime dependencies.
 npm install accrual
 ```
 
-Requires Node 20 or newer.
+Requires Node 20 or newer. MIT licensed.
+
+- Package: https://www.npmjs.com/package/accrual
+- Source: https://github.com/accrualtools/accrual
+- Site and calculator: https://accrual.tools
 
 ## Why
 
@@ -181,7 +185,7 @@ surface, and it reads in a few minutes.
 npm test
 ```
 
-149 tests covering the library, the CLI, the MCP protocol surface and the
+150 tests covering the library, the CLI, the MCP protocol surface and the
 published browser bundle. Two expected values in the loan tests were wrong on
 first writing and were corrected against an independent 40-digit calculation
 rather than adjusted to match the code.
