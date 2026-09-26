@@ -24,7 +24,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "test": "node --test \"test/**/*.test.mjs\"",
+    "test": "node --test test/*.test.mjs",
     "cli": "node bin/accrual.mjs",
     "mcp": "node mcp/server.mjs",
     "build": "node scripts/build.mjs",

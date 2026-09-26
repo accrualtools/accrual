@@ -142,6 +142,45 @@ test('the README and the MCP config it suggests agree with the declared bin', as
   }
 });
 
+test('npm test works on the oldest Node the package claims to support', async () => {
+  // The script was `node --test "test/**/*.test.mjs"`. Node only learned glob
+  // patterns for --test in 22, so on the Node 20 that engines advertises it
+  // failed with "Could not find", and `npm test` -- the one command the README
+  // tells a reader to run to check the test count -- ran nothing at all. CI on
+  // the engines floor is what caught it, after it had already shipped.
+  const floor = Number(pkg.engines.node.match(/(\d+)/)[1]);
+  const script = pkg.scripts.test;
+
+  if (floor < 22) {
+    assert.ok(
+      !script.includes('**'),
+      `the test script uses a glob, which node --test only supports from 22; engines allows ${floor}`
+    );
+  }
+
+  // Whatever the form, it has to actually reach every test file.
+  const { readdir } = await import('node:fs/promises');
+  const files = (await readdir(join(root, 'test'))).filter((f) => f.endsWith('.test.mjs'));
+  assert.ok(files.length >= 8, `expected the full suite, found ${files.length} files`);
+
+  // And the pattern has to reach every file. Checked statically: the shell
+  // expands it before Node sees it, so spawning the script here would either
+  // recurse into this file or measure something other than resolution. The
+  // end-to-end proof is CI running this same script on the engines floor.
+  const pattern = script.match(/(\S*test\S*\.mjs)/)?.[1]?.replace(/"/g, '');
+  assert.ok(pattern, `cannot tell which files the test script runs: ${script}`);
+
+  const matcher = new RegExp(
+    `^${pattern.replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*\\\*\//g, '(?:.*/)?').replace(/\*/g, '[^/]*')}$`
+  );
+  const unmatched = files.filter((f) => !matcher.test(`test/${f}`));
+  assert.deepEqual(
+    unmatched,
+    [],
+    `the pattern ${pattern} never reaches: ${unmatched.join(', ')}`
+  );
+});
+
 test('the test count advertised to humans and agents is the real one', async () => {
   // This claim has gone stale three times already (37, then 58, then 64 were all
   // being advertised while the suite had moved on). A number nobody checks is a
