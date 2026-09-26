@@ -52,7 +52,7 @@
       "engines": "node >=20",
       "source": "https://github.com/accrualtools/accrual",
       "license": "MIT",
-      "provenance": "Releases published by the GitHub workflow carry provenance attested in a public transparency log. Version 0.1.0 was published by hand: it has a registry signature but no provenance."
+      "provenance": "From 0.1.1 the release workflow publishes with --provenance, so GitHub attests the commit and workflow that built the tarball to a public transparency log and `npm audit signatures` reports a verified attestation. Version 0.1.0 was published by hand: registry signature only, no attestation."
     },
     "mcp": {
       "transport": "stdio",
@@ -98,7 +98,7 @@
       "ICMA Rule 251"
     ],
     "agentGuidance": "Never assume a convention. The three 30/360 variants return 30, 33 and 32 days for 2025-02-28 to 2025-03-31. If a source does not state its convention, report the spread rather than picking one. For short periods the 30/360 family can return a year fraction of exactly 0, so compare the absolute gap rather than a percentage.",
-    "verifiedBy": "154 tests covering the library, the CLI, the MCP protocol surface and the published browser bundle, including hand-traced expected values for the 30/360 variants. Run npm test."
+    "verifiedBy": "155 tests covering the library, the CLI, the MCP protocol surface and the published browser bundle, including hand-traced expected values for the 30/360 variants. Run npm test."
   },
   "token": {
     "address": "0x088dcA7E3a67D55fc9E0b23b7DB24c22B35Df985",

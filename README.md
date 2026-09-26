@@ -187,7 +187,7 @@ surface, and it reads in a few minutes.
 npm test
 ```
 
-154 tests covering the library, the CLI, the MCP protocol surface and the
+155 tests covering the library, the CLI, the MCP protocol surface and the
 published browser bundle. Two expected values in the loan tests were wrong on
 first writing and were corrected against an independent 40-digit calculation
 rather than adjusted to match the code.
@@ -211,11 +211,13 @@ grep -rn "^import" node_modules/accrual/src/
                                # every import, none leaving the directory
 ```
 
-`npm audit signatures` is the one I cannot fake. Provenance is attested by
-GitHub and written to a public transparency log when the release workflow
-publishes, tying the bytes you installed to a commit you can read. Versions
-published before that workflow existed carry a registry signature but no
-provenance, and `0.1.0` is one of them.
+`npm audit signatures` is the one I cannot fake. On a current install it prints
+both `1 package has a verified registry signature` and `1 package has a verified
+attestation`. The attestation is provenance: GitHub signed a statement naming
+the commit and the workflow that built the tarball, and wrote it to a public
+transparency log, so the bytes you installed are tied to source you can read.
+That starts at `0.1.1`. `0.1.0` was published by hand and has the signature
+without the attestation.
 
 ## The one rule
 

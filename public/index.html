@@ -174,7 +174,7 @@
       <div><dt>conventions implemented</dt><dd>6</dd></div>
       <div><dt>30/360 variants</dt><dd>3, not interchangeable</dd></div>
       <div><dt>runtime dependencies</dt><dd>0</dd></div>
-      <div><dt>tests passing</dt><dd>154 / 154</dd></div>
+      <div><dt>tests passing</dt><dd>155 / 155</dd></div>
     </dl>
   </div>
 </section>
@@ -320,6 +320,8 @@ $ npm ls --all
 
 <span class="c">// who built the tarball, and from which commit</span>
 $ npm audit signatures
+1 package has a verified registry signature
+1 package has a verified attestation
 
 <span class="c">// every import in the source, none leaving its own directory</span>
 $ grep -rn "^import" node_modules/accrual/src/</pre>
@@ -327,7 +329,7 @@ $ grep -rn "^import" node_modules/accrual/src/</pre>
     <dl class="terms">
       <dt>tests run in public</dt><dd>every push, Node 20 and 22, on hardware I don't own</dd>
       <dt>packaging tested</dt><dd>a job installs the tarball and drives the CLI and MCP server through it</dd>
-      <dt>provenance</dt><dd>attested by GitHub, in a public transparency log, from the release workflow on</dd>
+      <dt>provenance</dt><dd>0.1.1 on, built by the workflow and attested by GitHub in a public transparency log</dd>
       <dt>0.1.0</dt><dd>published by hand, so it has a registry signature but no provenance</dd>
     </dl>
     <nav class="links">

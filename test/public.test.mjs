@@ -245,6 +245,39 @@ test('the verification section offers commands that exist and workflows that run
   );
 });
 
+test('the promise of provenance is backed by a workflow that actually attests it', async () => {
+  // Provenance is the one claim a reader cannot check by reading this repo: it
+  // only exists if the tarball was built by CI with --provenance and id-token
+  // permission. Publish by hand once, or drop either setting, and every surface
+  // keeps advertising an attestation that the next release will not carry.
+  const publish = await readFile(join(root, '.github/workflows/publish.yml'), 'utf8');
+  assert.match(publish, /npm publish[^\n]*--provenance/, 'the release no longer publishes with provenance');
+  assert.match(publish, /id-token:\s*write/, 'without id-token: write, --provenance cannot sign anything');
+  assert.match(publish, /tags:\s*\['v\*'\]/, 'the release is no longer driven by a version tag');
+
+  // A tag that disagrees with package.json produces a release nobody can trace
+  // back to a commit, which defeats the point of attesting it.
+  assert.match(publish, /does not match package\.json version/, 'the tag/version check is gone');
+  assert.match(publish, /npm test/, 'the release no longer runs the suite before publishing');
+
+  // And the claim has to stay narrow. 0.1.0 has no attestation, so every
+  // surface that mentions provenance has to keep saying which version it starts
+  // at rather than implying the whole history is covered.
+  const html = await readFile(join(root, 'public/index.html'), 'utf8');
+  const llms = await readFile(join(root, 'public/llms.txt'), 'utf8');
+  const readme = await readFile(join(root, 'README.md'), 'utf8');
+  const agent = JSON.parse(await readFile(join(root, 'public/agent.json'), 'utf8'));
+
+  for (const [name, text] of [
+    ['index.html', html],
+    ['llms.txt', llms],
+    ['README.md', readme],
+    ['agent.json', agent.tool.package.provenance],
+  ]) {
+    assert.match(text, /0\.1\.0/, `${name} stopped naming the version that lacks provenance`);
+  }
+});
+
 test('every rendered png matches the shape of the svg it came from', async () => {
   // The PNGs were once all rendered at a hard-coded 1600x900, which stretched
   // the 1500x500 banner without raising anything. A wrong aspect ratio is
