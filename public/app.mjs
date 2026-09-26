@@ -34,13 +34,21 @@ tabs.forEach((t) => {
 
 /* Guard: a calculator shows the reason instead of throwing into the console.
    It used to say "check the dates" for every failure, including a face value of
-   zero or a negative principal, which sent people looking in the wrong place. */
-function safely(fn, ...outputs) {
+   zero or a negative principal, which sent people looking in the wrong place.
+
+   The stale regions have to be emptied too. A calculator writes its headline
+   figure and its detail tables in separate steps, so a throw part-way through
+   left the tables holding the last good render: "face must be > 0" sat directly
+   above a duration of 8.2556 years, which reads as a working number rather than
+   as a leftover. Blank them, so the only thing on screen is the reason. */
+function safely(fn, message, stale = []) {
   try {
     fn();
   } catch (err) {
-    const msg = /date/i.test(err.message) ? 'check the dates' : err.message;
-    for (const o of outputs) if (o) o.textContent = msg;
+    if (message) {
+      message.textContent = /date/i.test(err.message) ? 'check the dates' : err.message;
+    }
+    for (const el of stale) if (el) el.innerHTML = '';
   }
 }
 
@@ -135,6 +143,7 @@ function renderBond() {
   });
   $('n-price').textContent = fmt(r.price, 4);
   kv($('n-kv'), [
+    /* Safe to divide: bondMetrics refuses a face of zero before we get here. */
     ['per 100 face', fmt((r.price / face) * 100, 4)],
     ['vs par', r.price > face ? 'premium' : r.price < face ? 'discount' : 'par'],
     ['macaulay duration', `${r.macaulay.toFixed(4)} y`],
@@ -147,13 +156,15 @@ function renderBond() {
   }).join('');
 }
 
-const wire = (ids, fn, ...outs) => {
-  const run = () => safely(fn, ...outs);
+/* ids: what re-renders on change. message: where the reason goes. stale: the
+   regions that must be cleared so no superseded number survives an error. */
+const wire = (ids, fn, message, stale = []) => {
+  const run = () => safely(fn, message, stale);
   ids.forEach((id) => { $(id).addEventListener('input', run); $(id).addEventListener('change', run); });
   run();
 };
 
-wire(['d-from', 'd-to'], renderDays, $('d-spread'));
-wire(['a-principal', 'a-rate', 'a-from', 'a-to', 'a-comp'], renderAccrue, $('a-interest'));
-wire(['b-face', 'b-price', 'b-settle', 'b-mat'], renderBill, $('b-inv'));
-wire(['n-face', 'n-coupon', 'n-yield', 'n-years', 'n-freq'], renderBond, $('n-price'));
+wire(['d-from', 'd-to'], renderDays, $('d-spread'), [$('d-rows')]);
+wire(['a-principal', 'a-rate', 'a-from', 'a-to', 'a-comp'], renderAccrue, $('a-interest'), [$('a-kv'), $('a-rows')]);
+wire(['b-face', 'b-price', 'b-settle', 'b-mat'], renderBill, $('b-inv'), [$('b-kv')]);
+wire(['n-face', 'n-coupon', 'n-yield', 'n-years', 'n-freq'], renderBond, $('n-price'), [$('n-kv'), $('n-rows')]);

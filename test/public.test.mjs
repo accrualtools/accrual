@@ -95,6 +95,27 @@ test('the published CLI and MCP copies point at the bundle, not at src', async (
   }
 });
 
+test('every calculator clears its detail regions when a render fails', async () => {
+  // A calculator writes its headline figure and its detail tables in separate
+  // steps, so a throw part-way through used to leave the tables holding the last
+  // good render: "face must be > 0" sat directly above a duration of 8.2556
+  // years, which reads as a working number rather than as a leftover. There is no
+  // DOM here (the package has no dependencies, so no jsdom), so assert on the
+  // wiring: each wire() call must name the regions to blank.
+  const app = await readFile(join(root, 'public/app.mjs'), 'utf8');
+  const calls = [...app.matchAll(/^wire\(\[([^\]]*)\],\s*(\w+),\s*([^\n]*)$/gm)];
+  assert.equal(calls.length, 4, `expected four wired calculators, found ${calls.length}`);
+  for (const [line, , fn, rest] of calls) {
+    assert.match(
+      rest,
+      /\[\s*\$\(/,
+      `${fn} passes no stale regions to clear, so a failed render leaves old numbers on screen: ${line.trim()}`
+    );
+  }
+  // And the guard must actually blank them rather than only writing the message.
+  assert.match(app, /for \(const el of stale\) if \(el\) el\.innerHTML = '';/);
+});
+
 test('the published copies are in step with the sources they were built from', async () => {
   // Running the build is part of shipping. A stale public/ means the site and
   // the repo disagree about what the code does, silently.
@@ -133,5 +154,41 @@ test('the browser bundle carries the current source of all three modules', async
       .at(-1);
     assert.ok(marker, `no exported function found in ${name}`);
     assert.ok(published.includes(marker), `${name} looks stale in the bundle: missing ${marker}`);
+  }
+});
+
+test('every buy link points at this token, not at the launchpad index', async () => {
+  // A bare /launchpad link drops the visitor on a list of every token on the
+  // venue and makes them find this one by hand, next to hundreds they did not
+  // ask for. The address is what makes the link mean anything, so hold each
+  // link to the address the site itself publishes.
+  const llms = await readFile(join(root, 'public/llms.txt'), 'utf8');
+  const declared = llms.match(/Contract address:\s*(0x[a-fA-F0-9]{40})/)?.[1];
+  assert.ok(declared, 'llms.txt no longer states a contract address');
+
+  const surfaces = ['public/index.html', 'public/agent.json'];
+  for (const rel of surfaces) {
+    const text = await readFile(join(root, rel), 'utf8');
+    const links = [...text.matchAll(/https?:\/\/[a-z.]*ponsfamily\.com\/launchpad[^"'\s<]*/g)].map(
+      (m) => m[0]
+    );
+    assert.ok(links.length > 0, `${rel} has no pons link to check`);
+    for (const link of links) {
+      assert.ok(
+        link.toLowerCase().endsWith(declared.toLowerCase()),
+        `${rel} links to ${link}, which does not end at the declared token ${declared}`
+      );
+    }
+  }
+
+  // And the addresses quoted across the site must be the same one.
+  for (const rel of [...surfaces, 'public/llms.txt']) {
+    const text = await readFile(join(root, rel), 'utf8');
+    const found = new Set(
+      [...text.matchAll(/0x[a-fA-F0-9]{40}/g)].map((m) => m[0].toLowerCase())
+    );
+    for (const addr of found) {
+      assert.equal(addr, declared.toLowerCase(), `${rel} quotes a second address: ${addr}`);
+    }
   }
 });

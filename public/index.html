@@ -174,7 +174,7 @@
       <div><dt>conventions implemented</dt><dd>6</dd></div>
       <div><dt>30/360 variants</dt><dd>3, not interchangeable</dd></div>
       <div><dt>runtime dependencies</dt><dd>0</dd></div>
-      <div><dt>tests passing</dt><dd>145 / 145</dd></div>
+      <div><dt>tests passing</dt><dd>147 / 147</dd></div>
     </dl>
   </div>
 </section>
@@ -286,7 +286,7 @@
 <pre><span class="c">// claude_desktop_config.json, or any MCP client</span>
 {
   <span class="k">"mcpServers"</span>: {
-    <span class="k">"accrual"</span>: { <span class="k">"command"</span>: <span class="k">"node"</span>, <span class="k">"args"</span>: [<span class="k">"mcp/server.mjs"</span>] }
+    <span class="k">"accrual"</span>: { <span class="k">"command"</span>: <span class="k">"npx"</span>, <span class="k">"args"</span>: [<span class="k">"-y"</span>, <span class="k">"accrual"</span>, <span class="k">"accrual-mcp"</span>] }
   }
 }</pre>
 <pre><span class="c">// tools exposed</span>
@@ -306,8 +306,8 @@ loan_affordable   <span class="c">what a given payment can borrow</span></pre>
 <pre><span class="c">// or from a shell</span>
 $ accrual days   --from 2025-02-28 --to 2025-03-31
 $ accrual bill   --face 100 --price 97.80 --settle 2025-01-02 --maturity 2025-07-03
-$ accrual loan   --principal 200000 --rate 6 --years 30
-$ accrual payoff --principal 200000 --rate 6 --years 30 --extra 200</pre>
+$ accrual loan   --principal 200000 --rate 6% --years 30
+$ accrual payoff --principal 200000 --rate 6% --years 30 --extra 200</pre>
     </div>
     <nav class="links">
       <a href="/agent.json">agent.json</a>
@@ -340,7 +340,7 @@ $ accrual payoff --principal 200000 --rate 6 --years 30 --extra 200</pre>
       <code>0x088dcA7E3a67D55fc9E0b23b7DB24c22B35Df985</code>
     </div>
     <nav class="links">
-      <a href="https://ponsfamily.com/launchpad">buy on pons</a>
+      <a href="https://www.ponsfamily.com/launchpad/0x088dcA7E3a67D55fc9E0b23b7DB24c22B35Df985">buy on pons</a>
       <a href="https://x.com/accrualtools">x / accrualtools</a>
     </nav>
   </div>
