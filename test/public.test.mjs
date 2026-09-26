@@ -233,6 +233,16 @@ test('the verification section offers commands that exist and workflows that run
     /no provenance|registry signature but no provenance/,
     'the page no longer admits which versions lack provenance'
   );
+
+  // The transcript claims to be real `npm ls` output, so the version in it has
+  // to be the version that actually installs. Nothing was holding this in
+  // place, so the first release bump would have quietly made the proof a lie.
+  const shown = html.match(/└── accrual@([\d.]+)/)?.[1];
+  assert.equal(
+    shown,
+    pkg.version,
+    'the npm ls transcript shows a version the registry no longer serves'
+  );
 });
 
 test('every rendered png matches the shape of the svg it came from', async () => {

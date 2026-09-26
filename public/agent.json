@@ -4,7 +4,6 @@
   "symbol": "ACCR",
   "summary": "Yield math for tokenized real-world assets. Day-count conventions, accrued interest, present value, duration and convexity. Available as a library, a CLI and an MCP server.",
   "site": "https://accrual.tools",
-
   "tool": {
     "purpose": "Compute fixed-income and money-market figures from numbers and dates.",
     "capabilities": [
@@ -38,14 +37,17 @@
     "continuousIntegration": {
       "url": "https://github.com/accrualtools/accrual/actions/workflows/tests.yml",
       "definition": "https://github.com/accrualtools/accrual/blob/main/.github/workflows/tests.yml",
-      "runsOn": ["node 20", "node 22"],
+      "runsOn": [
+        "node 20",
+        "node 22"
+      ],
       "coversPackaging": "One job installs the packed tarball and drives the CLI and the MCP server through it, because a suite run from the source tree cannot observe a packaging failure."
     },
     "install": "npm install accrual",
     "package": {
       "registry": "https://www.npmjs.com/package/accrual",
       "name": "accrual",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "runtimeDependencies": 0,
       "engines": "node >=20",
       "source": "https://github.com/accrualtools/accrual",
@@ -56,7 +58,11 @@
       "transport": "stdio",
       "protocolVersion": "2024-11-05",
       "command": "npx",
-      "args": ["-y", "accrual", "accrual-mcp"],
+      "args": [
+        "-y",
+        "accrual",
+        "accrual-mcp"
+      ],
       "tools": [
         "day_count",
         "accrue_simple",
@@ -78,14 +84,22 @@
     "cliInstall": "npx -y accrual --help",
     "browserBundle": "https://accrual.tools/accrual.mjs"
   },
-
   "conventions": {
-    "supported": ["ACT/360", "ACT/365F", "ACT/ACT", "30U/360", "30/360", "30E/360"],
-    "references": ["ISDA 2006 Definitions section 4.16", "ICMA Rule 251"],
+    "supported": [
+      "ACT/360",
+      "ACT/365F",
+      "ACT/ACT",
+      "30U/360",
+      "30/360",
+      "30E/360"
+    ],
+    "references": [
+      "ISDA 2006 Definitions section 4.16",
+      "ICMA Rule 251"
+    ],
     "agentGuidance": "Never assume a convention. The three 30/360 variants return 30, 33 and 32 days for 2025-02-28 to 2025-03-31. If a source does not state its convention, report the spread rather than picking one. For short periods the 30/360 family can return a year fraction of exactly 0, so compare the absolute gap rather than a percentage.",
     "verifiedBy": "154 tests covering the library, the CLI, the MCP protocol surface and the published browser bundle, including hand-traced expected values for the 30/360 variants. Run npm test."
   },
-
   "token": {
     "address": "0x088dcA7E3a67D55fc9E0b23b7DB24c22B35Df985",
     "chain": {
@@ -101,7 +115,10 @@
       "canBlacklist": false,
       "canRaiseTax": false,
       "canRemoveLiquidityAfterGraduation": false,
-      "mutableForever": ["creator fee recipient address", "buyback enabled flag"]
+      "mutableForever": [
+        "creator fee recipient address",
+        "buyback enabled flag"
+      ]
     },
     "tax": {
       "appliesTo": "buys only",
@@ -109,7 +126,10 @@
       "endBps": 0,
       "windowSeconds": 5,
       "shape": "exponential decay",
-      "exempt": ["launcher", "creator fee recipient"],
+      "exempt": [
+        "launcher",
+        "creator fee recipient"
+      ],
       "agentGuidance": "Do not race t=0. Wait out the window; the tax is 0 from t=5."
     },
     "graduation": {
@@ -117,10 +137,13 @@
       "then": "bonding curve closes, Uniswap v4 pool opens",
       "liquidityWithdrawableBy": "nobody"
     },
-    "fees": { "launchFeeEth": 0.0005, "creatorTaxBps": 200, "buybackEnabled": true },
+    "fees": {
+      "launchFeeEth": 0.0005,
+      "creatorTaxBps": 200,
+      "buybackEnabled": true
+    },
     "holderRights": "none. ACCR pays no coupon, accrues nothing, and is not a claim on any asset."
   },
-
   "brand": {
     "palette": {
       "bg": "#0B0F0E",
@@ -134,7 +157,6 @@
     "logo": "https://accrual.tools/logo.svg",
     "og": "https://accrual.tools/og.png"
   },
-
   "links": {
     "website": "https://accrual.tools",
     "npm": "https://www.npmjs.com/package/accrual",
@@ -144,7 +166,6 @@
     "telegram": null,
     "discord": null
   },
-
   "disclaimers": {
     "notASecurity": "ACCR is not a security, not a claim on any asset, and carries no coupon or redemption right.",
     "notAdvice": "The library is calculation software. Output is not financial advice, not a quote, and not a valuation to settle against.",

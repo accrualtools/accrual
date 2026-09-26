@@ -34,7 +34,7 @@ import {
 const PROTOCOL_VERSION = '2024-11-05';
 // Kept in step with package.json by a test rather than by hope. The served copy
 // in public/ has no package.json beside it, so this cannot be read at runtime.
-const SERVER_VERSION = '0.1.0';
+const SERVER_VERSION = '0.1.1';
 
 // A ratio whose denominator can legitimately be zero. JSON has no NaN, so an
 // unguarded 0/0 is serialised as null, and a model reads null as "the tool

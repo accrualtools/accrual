@@ -1,6 +1,6 @@
 {
   "name": "accrual",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Yield math for tokenized real-world assets. Day-count conventions, accrued interest, discount, and duration. No RPC, no keys, no signing.",
   "license": "MIT",
   "type": "module",
