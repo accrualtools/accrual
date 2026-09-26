@@ -42,5 +42,13 @@
   "engines": {
     "node": ">=20"
   },
-  "homepage": "https://accrual.tools"
+  "homepage": "https://accrual.tools",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/accrualtools/accrual.git"
+  },
+  "bugs": {
+    "url": "https://github.com/accrualtools/accrual/issues"
+  },
+  "author": "accrualtools"
 }

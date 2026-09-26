@@ -85,6 +85,13 @@ test('the package declares a Node version that supports what it uses', () => {
   assert.match(pkg.engines.node, />=\s*(2[0-9]|[3-9][0-9])/);
 });
 
+test('the package tells a reader where to find the source and report a bug', () => {
+  // The whole credibility claim is "zero dependencies, read it yourself". Without
+  // a repository link the npm page gives a reader no way to do that.
+  assert.match(pkg.repository?.url ?? '', /^git\+https:\/\/github\.com\/[\w.-]+\/[\w.-]+\.git$/);
+  assert.match(pkg.bugs?.url ?? '', /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/issues$/);
+});
+
 test('the declared licence ships as a file, and the two agree', async () => {
   // "license": "MIT" in package.json is metadata, not a grant. Without the text
   // in the tarball nobody has been given terms, and a reader who checks cannot
