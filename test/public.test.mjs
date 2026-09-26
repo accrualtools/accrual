@@ -354,6 +354,34 @@ test('the share cards quote figures the code still returns', async () => {
     provCard.includes(`accrual ${version}`),
     `card-provenance.svg names a version other than the current ${version}`
   );
+
+  // The burn card makes an arithmetic claim about supply, so the three figures
+  // on it have to satisfy the identity it prints. A card that shows
+  // minted - burned == totalSupply and then quotes numbers that don't add up
+  // invites exactly the scrutiny it was meant to withstand. The figures come
+  // from chain and cannot be recomputed offline, so check the identity instead.
+  const burnCard = await readFile(join(root, 'public/card-burn.svg'), 'utf8');
+  const figures = [...burnCard.matchAll(/>(?:&#8722; )?([\d,]+\.\d{2})</g)].map((m) =>
+    // In cents, because these are 18-decimal balances truncated for display and
+    // floating point would reintroduce the very rounding error being checked.
+    Math.round(Number(m[1].replace(/,/g, '')) * 100)
+  );
+  assert.equal(figures.length, 3, `card-burn.svg should quote exactly 3 supply figures, found ${figures.length}`);
+  const [mint, burned, supply] = figures;
+  assert.equal(
+    mint - burned,
+    supply,
+    `card-burn.svg prints "minted - burned == totalSupply" but the figures give ${(mint - burned) / 100}, not ${supply / 100}`
+  );
+  assert.equal(mint, 100_000_000_000, 'card-burn.svg changed the mint figure away from 1,000,000,000.00');
+
+  // And it must keep saying the token carries no rights, on the one card most
+  // likely to be read as a reason to buy.
+  assert.match(
+    burnCard,
+    /No coupon, no claim on revenue, no yield/,
+    'card-burn.svg dropped the disclaimer, leaving a supply-cut claim with nothing qualifying it'
+  );
 });
 
 test('every surface tells a reader how to install the real package', async () => {

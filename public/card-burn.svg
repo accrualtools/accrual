@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="The ACCR deployer bought its launch allocation and sent all 5,740,664.02 tokens to the zero address in block 72848514, cutting total supply from one billion to 994,259,335.98, and minted minus burned equals total supply exactly">
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+
+  <text x="96" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87" letter-spacing="3">A CLAIM THAT CHECKS ITSELF, IN THREE NUMBERS</text>
+
+  <text x="96" y="196" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="50" fill="#D8E0DD">I held some.</text>
+  <text x="96" y="262" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="50" fill="#FFB238">Then I burned it.</text>
+
+  <line x1="96" y1="314" x2="1504" y2="314" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- The arithmetic. Every figure below is read from Transfer logs. -->
+  <text x="96" y="372" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="23" fill="#7B8B87" letter-spacing="2">SUPPLY, FROM THE TRANSFER LOGS</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="27">
+    <text x="96" y="428" fill="#7B8B87">minted at launch</text>
+    <text x="620" y="428" fill="#D8E0DD" text-anchor="end">1,000,000,000.00</text>
+
+    <text x="96" y="472" fill="#7B8B87">burned</text>
+    <text x="620" y="472" fill="#FFB238" text-anchor="end">&#8722; 5,740,664.02</text>
+
+    <text x="96" y="520" fill="#7B8B87">totalSupply now</text>
+    <text x="620" y="520" fill="#B8FF3C" text-anchor="end">994,259,335.98</text>
+  </g>
+  <line x1="360" y1="488" x2="620" y2="488" stroke="#1E2826" stroke-width="2"/>
+
+  <text x="760" y="428" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87">one burn event, not a schedule</text>
+  <text x="760" y="472" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87">to 0x0000...0000, block 72848514</text>
+  <text x="760" y="520" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87">0.57% of the mint</text>
+
+  <!-- The identity a reader can run themselves. -->
+  <text x="96" y="600" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30" fill="#B8FF3C">minted &#8722; burned == totalSupply</text>
+
+  <text x="96" y="668" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#D8E0DD">The deployer bought its own launch allocation from the curve, then</text>
+  <text x="96" y="706" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#D8E0DD">sent all of it to the zero address. Its balance reads 0 today.</text>
+
+  <text x="96" y="768" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">No coupon, no claim on revenue, no yield to holders. The tools are the product.</text>
+
+  <rect x="96" y="798" width="1408" height="2" fill="#1E2826"/>
+
+  <text x="96" y="848" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="23" fill="#7B8B87">$ACCR 0x088dcA7E3a67D55fc9E0b23b7DB24c22B35Df985 &#183; Robinhood Chain</text>
+  <text x="1504" y="848" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#B8FF3C">accrual</text>
+</svg>
