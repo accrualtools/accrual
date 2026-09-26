@@ -47,7 +47,7 @@ test('every bin exists, is executable, and starts with a shebang', async () => {
 test('the files array covers everything the package needs to run', async () => {
   // src/ alone is not enough: the bins live outside it, and a package with no
   // README installs as four opaque directories.
-  for (const needed of ['src', 'bin', 'mcp', 'README.md']) {
+  for (const needed of ['src', 'bin', 'mcp', 'README.md', 'LICENSE']) {
     assert.ok(pkg.files.includes(needed), `files is missing ${needed}`);
   }
   for (const entry of pkg.files) {
@@ -83,6 +83,16 @@ test('every export path is inside a directory that gets published', () => {
 test('the package declares a Node version that supports what it uses', () => {
   // node --test with a glob and Object.hasOwn both need 20 or newer.
   assert.match(pkg.engines.node, />=\s*(2[0-9]|[3-9][0-9])/);
+});
+
+test('the declared licence ships as a file, and the two agree', async () => {
+  // "license": "MIT" in package.json is metadata, not a grant. Without the text
+  // in the tarball nobody has been given terms, and a reader who checks cannot
+  // confirm the README's claim.
+  assert.equal(pkg.license, 'MIT');
+  const text = await readFile(join(root, 'LICENSE'), 'utf8');
+  assert.match(text, /^MIT License/, 'LICENSE does not start as an MIT licence');
+  assert.match(text, /THE SOFTWARE IS PROVIDED "AS IS"/, 'LICENSE is missing the warranty disclaimer');
 });
 
 test('the README documents every CLI command the binary accepts', async () => {
