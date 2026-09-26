@@ -1,27 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="The MCP server can compute a valuation but cannot act on one">
   <rect width="1600" height="900" fill="#0B0F0E"/>
 
-  <text x="96" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87" letter-spacing="3">MCP SERVER / STDIO / 8 TOOLS</text>
+  <text x="96" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87" letter-spacing="3">MCP SERVER / STDIO / 13 TOOLS</text>
 
   <text x="96" y="204" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="52" fill="#D8E0DD">it can price a position.</text>
   <text x="96" y="272" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="52" fill="#B8FF3C">it cannot open one.</text>
 
   <line x1="96" y1="324" x2="1504" y2="324" stroke="#1E2826" stroke-width="2"/>
 
-  <!-- CAN: the eight tools, named. -->
+  <!-- CAN: all thirteen tools, named, because the count is checkable. -->
   <text x="96" y="382" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#B8FF3C" letter-spacing="2">CAN</text>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#D8E0DD">
-    <text x="96" y="434">day_count</text>
-    <text x="96" y="474">accrue_simple</text>
-    <text x="96" y="514">accrue_compound</text>
-    <text x="96" y="554">bill_yields</text>
-    <text x="440" y="434">bond_metrics</text>
-    <text x="440" y="474">present_value</text>
-    <text x="440" y="514">compare_products</text>
-    <text x="440" y="554">year_fraction</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="23" fill="#D8E0DD">
+    <text x="96" y="428">day_count</text>
+    <text x="96" y="466">year_fraction</text>
+    <text x="96" y="504">accrue_simple</text>
+    <text x="96" y="542">accrue_compound</text>
+    <text x="96" y="580">bill_yields</text>
+    <text x="96" y="618">bond_metrics</text>
+    <text x="96" y="656">present_value</text>
+    <text x="440" y="428">compare_products</text>
+    <text x="440" y="466">loan_payment</text>
+    <text x="440" y="504">loan_schedule</text>
+    <text x="440" y="542">loan_payoff</text>
+    <text x="440" y="580">loan_implied_rate</text>
+    <text x="440" y="618">loan_affordable</text>
   </g>
 
-  <line x1="820" y1="356" x2="820" y2="656" stroke="#1E2826" stroke-width="2"/>
+  <line x1="820" y1="356" x2="820" y2="672" stroke="#1E2826" stroke-width="2"/>
 
   <!-- CANNOT: struck through, because absence is the claim. -->
   <text x="884" y="382" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#FFB238" letter-spacing="2">CANNOT</text>
@@ -38,11 +43,10 @@
     <line x1="884" y1="546" x2="1177" y2="546"/>
   </g>
 
-  <rect x="96" y="628" width="1408" height="2" fill="#1E2826"/>
+  <rect x="96" y="700" width="1408" height="2" fill="#1E2826"/>
 
-  <text x="96" y="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87">you don't have to take my word for it:</text>
-  <text x="96" y="754" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30" fill="#B8FF3C">the source imports nothing outside its own directory.</text>
-  <text x="96" y="806" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87">0 dependencies. 150 of 150 tests. that's the whole audit.</text>
+  <text x="96" y="758" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="29" fill="#B8FF3C">the source imports nothing outside its own directory.</text>
+  <text x="96" y="808" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">0 dependencies. 151 of 151 tests. that's the whole audit.</text>
 
   <text x="1504" y="806" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#B8FF3C">accrual</text>
 </svg>

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="accrual is on npm: one package, zero dependencies, available as a library, a CLI and an MCP server">
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+
+  <text x="96" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87" letter-spacing="3">NPM / PUBLISHED / MIT / NODE &gt;=20</text>
+
+  <!-- The install line and its real output, because the output is the claim. -->
+  <text x="96" y="204" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="54" fill="#D8E0DD">$ npm install accrual</text>
+  <text x="96" y="274" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="54" fill="#B8FF3C">added 1 package</text>
+
+  <text x="96" y="330" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">one entry in your tree. that is the whole dependency audit.</text>
+
+  <line x1="96" y1="384" x2="1504" y2="384" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- Three surfaces, each with the command and a figure it actually returns. -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="96" y="446" font-size="23" fill="#B8FF3C" letter-spacing="2">LIBRARY</text>
+    <text x="96" y="496" font-size="24" fill="#D8E0DD">import { accrueSimple }</text>
+    <text x="96" y="532" font-size="24" fill="#D8E0DD">from 'accrual'</text>
+    <text x="96" y="596" font-size="22" fill="#7B8B87">1,000,000 at 5.25%</text>
+    <text x="96" y="630" font-size="22" fill="#7B8B87">ACT/365F, six months</text>
+    <text x="96" y="678" font-size="27" fill="#FFB238">26,034.25</text>
+
+    <text x="576" y="446" font-size="23" fill="#B8FF3C" letter-spacing="2">CLI</text>
+    <text x="576" y="496" font-size="24" fill="#D8E0DD">npx -y accrual loan</text>
+    <text x="576" y="532" font-size="24" fill="#D8E0DD">--rate 6% --years 30</text>
+    <text x="576" y="596" font-size="22" fill="#7B8B87">200,000 level payment</text>
+    <text x="576" y="630" font-size="22" fill="#7B8B87">per month</text>
+    <text x="576" y="678" font-size="27" fill="#FFB238">1,199.10</text>
+
+    <text x="1056" y="446" font-size="23" fill="#B8FF3C" letter-spacing="2">MCP SERVER</text>
+    <text x="1056" y="496" font-size="24" fill="#D8E0DD">npx -y accrual</text>
+    <text x="1056" y="532" font-size="24" fill="#D8E0DD">accrual-mcp</text>
+    <text x="1056" y="596" font-size="22" fill="#7B8B87">stdio, no network,</text>
+    <text x="1056" y="630" font-size="22" fill="#7B8B87">no key material</text>
+    <text x="1056" y="678" font-size="27" fill="#FFB238">13 tools</text>
+  </g>
+
+  <line x1="540" y1="418" x2="540" y2="700" stroke="#1E2826" stroke-width="2"/>
+  <line x1="1020" y1="418" x2="1020" y2="700" stroke="#1E2826" stroke-width="2"/>
+
+  <rect x="96" y="748" width="1408" height="2" fill="#1E2826"/>
+
+  <text x="96" y="822" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">0 dependencies · 151 of 151 tests · six day-count conventions</text>
+  <text x="1504" y="822" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#B8FF3C">npmjs.com/package/accrual</text>
+</svg>

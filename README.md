@@ -185,7 +185,7 @@ surface, and it reads in a few minutes.
 npm test
 ```
 
-150 tests covering the library, the CLI, the MCP protocol surface and the
+151 tests covering the library, the CLI, the MCP protocol surface and the
 published browser bundle. Two expected values in the loan tests were wrong on
 first writing and were corrected against an independent 40-digit calculation
 rather than adjusted to match the code.

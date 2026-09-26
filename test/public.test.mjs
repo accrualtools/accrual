@@ -193,6 +193,37 @@ test('every buy link points at this token, not at the launchpad index', async ()
   }
 });
 
+test('the share cards quote figures the code still returns', async () => {
+  // A card is the one artefact nobody re-reads before posting it, and one of
+  // them advertised eight MCP tools for months after the server grew to
+  // thirteen. Hold the numbers printed on them to the live code.
+  const server = await readFile(join(root, 'mcp/server.mjs'), 'utf8');
+  const toolCount = [...server.matchAll(/^ {4}name: '[a-z_]+',$/gm)].length;
+
+  const npmCard = await readFile(join(root, 'public/card-npm.svg'), 'utf8');
+  assert.ok(npmCard.includes(`${toolCount} tools`), `card-npm.svg is stale: the server has ${toolCount} tools`);
+
+  const agentCard = await readFile(join(root, 'public/card-agent.svg'), 'utf8');
+  assert.ok(agentCard.includes(`${toolCount} TOOLS`), `card-agent.svg is stale: the server has ${toolCount} tools`);
+  for (const [, name] of server.matchAll(/^ {4}name: '([a-z_]+)',$/gm)) {
+    assert.ok(agentCard.includes(name), `card-agent.svg lists the tools but omits ${name}`);
+  }
+
+  // The two headline figures are the ones a reader is most likely to check.
+  const interest = src.accrueSimple({
+    principal: 1_000_000,
+    rate: 0.0525,
+    from: '2025-01-31',
+    to: '2025-07-31',
+    convention: 'ACT/365F',
+  }).interest;
+  const payment = src.levelPayment({ principal: 200_000, rate: 0.06, years: 30 }).payment;
+  const money = (n) => n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  assert.ok(npmCard.includes(money(interest)), `card-npm.svg quotes an interest figure the library no longer returns (${money(interest)})`);
+  assert.ok(npmCard.includes(money(payment)), `card-npm.svg quotes a payment the library no longer returns (${money(payment)})`);
+});
+
 test('every surface tells a reader how to install the real package', async () => {
   // For a while the site published an MCP config and a shell transcript for a
   // package that was not on the registry, so following the instructions gave a
