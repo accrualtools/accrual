@@ -1,5 +1,7 @@
 # accrual
 
+[![tests](https://github.com/accrualtools/accrual/actions/workflows/tests.yml/badge.svg)](https://github.com/accrualtools/accrual/actions/workflows/tests.yml)
+
 Yield math for tokenized real-world assets. Day-count conventions, accrued
 interest, present value, duration, convexity and loan amortisation.
 
@@ -185,10 +187,35 @@ surface, and it reads in a few minutes.
 npm test
 ```
 
-152 tests covering the library, the CLI, the MCP protocol surface and the
+153 tests covering the library, the CLI, the MCP protocol surface and the
 published browser bundle. Two expected values in the loan tests were wrong on
 first writing and were corrected against an independent 40-digit calculation
 rather than adjusted to match the code.
+
+They also run on every push, on Node 20 and 22, in
+[GitHub Actions](https://github.com/accrualtools/accrual/actions/workflows/tests.yml),
+so the count above is not only my word for it. One job installs the packed
+tarball and drives the CLI and the MCP server through it, because a suite that
+runs from the source tree cannot see a packaging failure.
+
+## Verify the claims yourself
+
+Every claim here is meant to be checkable in about a minute. These are the
+checks, not a summary of them.
+
+```
+npm install accrual            # "added 1 package" is the zero-dependency claim
+npm ls --all                   # the whole tree, one entry deep
+npm audit signatures           # who built this tarball, and from which commit
+grep -rn "^import" node_modules/accrual/src/
+                               # every import, none leaving the directory
+```
+
+`npm audit signatures` is the one I cannot fake. Provenance is attested by
+GitHub and written to a public transparency log when the release workflow
+publishes, tying the bytes you installed to a commit you can read. Versions
+published before that workflow existed carry a registry signature but no
+provenance, and `0.1.0` is one of them.
 
 ## The one rule
 

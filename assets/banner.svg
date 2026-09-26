@@ -42,7 +42,7 @@
   <!-- meta, right aligned -->
   <text class="m" x="1420" y="175" font-size="21" fill="#7B8B87" text-anchor="end">library / CLI / MCP</text>
   <text class="m" x="1420" y="211" font-size="21" fill="#7B8B87" text-anchor="end">13 MCP tools</text>
-    <text class="m" x="1420" y="247" font-size="21" fill="#7B8B87" text-anchor="end">152 of 152 tests</text>
+    <text class="m" x="1420" y="247" font-size="21" fill="#7B8B87" text-anchor="end">153 of 153 tests</text>
   <text class="m" x="1420" y="283" font-size="21" fill="#7B8B87" text-anchor="end">0 dependencies</text>
   <text class="m" x="1420" y="375" font-size="22" fill="#B8FF3C" text-anchor="end">accrual.tools</text>
 

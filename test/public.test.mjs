@@ -193,6 +193,48 @@ test('every buy link points at this token, not at the launchpad index', async ()
   }
 });
 
+test('the verification section offers commands that exist and workflows that run them', async () => {
+  // This section is the whole "don't take my word for it" claim. If the workflow
+  // it points at is deleted or renamed, the page keeps promising public proof
+  // that no longer exists, which is worse than never promising it.
+  const workflows = join(root, '.github/workflows');
+  const files = await readdir(workflows);
+  assert.ok(files.includes('tests.yml'), 'the tests workflow the site links to is gone');
+
+  const ci = await readFile(join(workflows, 'tests.yml'), 'utf8');
+  assert.match(ci, /on:\s*\n\s*push:/, 'the workflow no longer runs on push');
+  assert.match(ci, /npm test/, 'the workflow no longer runs the suite');
+  assert.match(ci, /npm pack/, 'the workflow no longer installs the tarball it publishes');
+  for (const version of ['20', '22']) {
+    assert.ok(ci.includes(`'${version}'`), `the workflow no longer tests Node ${version}`);
+  }
+
+  // Node 20 is tested because package.json promises it. If engines rises, the
+  // matrix has to rise with it or the promise goes untested.
+  const pkg = JSON.parse(await readFile(join(root, 'package.json'), 'utf8'));
+  const floor = pkg.engines.node.match(/(\d+)/)[1];
+  assert.ok(ci.includes(`'${floor}'`), `engines says >=${floor} but CI never runs that version`);
+
+  const html = await readFile(join(root, 'public/index.html'), 'utf8');
+  assert.ok(
+    html.includes('actions/workflows/tests.yml'),
+    'the page no longer links to the run a reader is told to watch'
+  );
+
+  // Only advertise commands that are real. `npm audit signatures` is the claim
+  // that cannot be faked, so it is the one most worth holding in place.
+  for (const cmd of ['npm audit signatures', 'npm ls --all', 'npm install accrual']) {
+    assert.ok(html.includes(cmd), `the page stopped telling readers to run: ${cmd}`);
+  }
+
+  // And the honest caveat has to survive: 0.1.0 was published by hand.
+  assert.match(
+    html,
+    /no provenance|registry signature but no provenance/,
+    'the page no longer admits which versions lack provenance'
+  );
+});
+
 test('every rendered png matches the shape of the svg it came from', async () => {
   // The PNGs were once all rendered at a hard-coded 1600x900, which stretched
   // the 1500x500 banner without raising anything. A wrong aspect ratio is

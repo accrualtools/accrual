@@ -174,7 +174,7 @@
       <div><dt>conventions implemented</dt><dd>6</dd></div>
       <div><dt>30/360 variants</dt><dd>3, not interchangeable</dd></div>
       <div><dt>runtime dependencies</dt><dd>0</dd></div>
-      <div><dt>tests passing</dt><dd>152 / 152</dd></div>
+      <div><dt>tests passing</dt><dd>153 / 153</dd></div>
     </dl>
   </div>
 </section>
@@ -297,6 +297,42 @@ accrueSimple({
     <nav class="links">
       <a href="https://www.npmjs.com/package/accrual">npm / accrual</a>
       <a href="https://github.com/accrualtools/accrual">source on github</a>
+    </nav>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>don't trust this page</h2>
+    <p class="sub">
+      Every number above is a claim, and a claim you cannot check is just
+      marketing. These four commands check them. They take about a minute and none
+      of them ask you to believe me.
+    </p>
+    <div class="stack">
+<pre><span class="c">// the zero-dependency claim, in the install output itself</span>
+$ npm install accrual
+added 1 package
+
+<span class="c">// the whole tree, one entry deep</span>
+$ npm ls --all
+└── accrual@0.1.0
+
+<span class="c">// who built the tarball, and from which commit</span>
+$ npm audit signatures
+
+<span class="c">// every import in the source, none leaving its own directory</span>
+$ grep -rn "^import" node_modules/accrual/src/</pre>
+    </div>
+    <dl class="terms">
+      <dt>tests run in public</dt><dd>every push, Node 20 and 22, on hardware I don't own</dd>
+      <dt>packaging tested</dt><dd>a job installs the tarball and drives the CLI and MCP server through it</dd>
+      <dt>provenance</dt><dd>attested by GitHub, in a public transparency log, from the release workflow on</dd>
+      <dt>0.1.0</dt><dd>published by hand, so it has a registry signature but no provenance</dd>
+    </dl>
+    <nav class="links">
+      <a href="https://github.com/accrualtools/accrual/actions/workflows/tests.yml">watch the tests run</a>
+      <a href="https://github.com/accrualtools/accrual/blob/main/.github/workflows/tests.yml">read what they run</a>
     </nav>
   </div>
 </section>

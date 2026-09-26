@@ -1,0 +1,122 @@
+# Runs the suite on every push, so "152 tests pass" stops being a claim only the
+# author can check. A reader can open the Actions tab and watch it fail or pass
+# on a machine nobody here controls.
+#
+# Node 20 is tested alongside 22 because package.json advertises ">=20"; without
+# it, the engines field is another unverified promise.
+
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['20', '22']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install
+        # There are no dependencies, so this asserts that rather than fetching any.
+        run: npm ci --ignore-scripts || npm install --no-package-lock --ignore-scripts
+
+      - name: Confirm the dependency tree is empty
+        run: |
+          count=$(node -p "Object.keys(require('./package.json').dependencies || {}).length")
+          if [ "$count" != "0" ]; then
+            echo "package.json declares $count runtime dependencies; the site claims zero"
+            exit 1
+          fi
+          echo "runtime dependencies: 0"
+
+      - name: Test
+        run: npm test
+
+      - name: Rebuild and check the published copies are in step
+        # The browser bundle is generated. If a commit changes src/ without
+        # rebuilding, public/ ships stale code and the site quietly diverges.
+        run: |
+          npm run build
+          if ! git diff --quiet -- public; then
+            echo "public/ is not in step with src/. Run npm run build and commit the result."
+            git --no-pager diff --stat -- public
+            exit 1
+          fi
+
+  install:
+    # Testing from the source tree hides packaging failures: the MCP server was
+    # once dead when launched through the symlink npm creates, and the whole
+    # green suite could not see it. So install the real tarball and use it.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Pack and install into a clean directory
+        run: |
+          tarball=$(npm pack --silent)
+          mkdir -p /tmp/consumer
+          cd /tmp/consumer
+          npm init -y >/dev/null
+          npm pkg set type=module >/dev/null
+          npm install "$GITHUB_WORKSPACE/$tarball" --no-fund --no-audit
+
+      - name: The library loads
+        working-directory: /tmp/consumer
+        run: |
+          node --input-type=module -e "
+            import { accrueSimple } from 'accrual';
+            const { interest } = accrueSimple({
+              principal: 1_000_000, rate: 0.0525,
+              from: '2025-01-31', to: '2025-07-31', convention: 'ACT/365F',
+            });
+            if (interest.toFixed(2) !== '26034.25') throw new Error('got ' + interest);
+            console.log('interest', interest.toFixed(2));
+          "
+
+      - name: The CLI runs through its installed bin
+        working-directory: /tmp/consumer
+        run: npx --no-install accrual loan --principal 200000 --rate 6% --years 30
+
+      - name: The MCP server answers through the symlink npm installed
+        working-directory: /tmp/consumer
+        run: |
+          printf '%s\n' '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' \
+            | npx --no-install accrual-mcp > out.jsonl
+          if [ ! -s out.jsonl ]; then
+            echo "the server started and answered nothing: the symlink regression is back"
+            exit 1
+          fi
+          node -e "
+            const l = require('fs').readFileSync('out.jsonl','utf8').trim().split('\n');
+            const r = JSON.parse(l[0]).result;
+            if (r.serverInfo.name !== 'accrual') throw new Error('unexpected server');
+            console.log('mcp replied, protocol', r.protocolVersion);
+          "
+
+      - name: No output carries NaN, Infinity or undefined
+        working-directory: /tmp/consumer
+        run: |
+          out=$(npx --no-install accrual days --from 2025-01-30 --to 2025-01-31; \
+                npx --no-install accrual bond --face 1000 --coupon 5 --yield 6 --years 10)
+          if echo "$out" | grep -qE 'NaN|Infinity|undefined'; then
+            echo "$out" | grep -nE 'NaN|Infinity|undefined'
+            exit 1
+          fi
+          echo "clean"

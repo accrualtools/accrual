@@ -17,6 +17,20 @@ Contract address: 0x088dcA7E3a67D55fc9E0b23b7DB24c22B35Df985
 MIT licensed. Installing it adds exactly one entry to your dependency tree,
 which is the claim you can check fastest.
 
+## How to verify these claims rather than trust them
+
+    npm ls --all          # the dependency tree, one entry deep
+    npm audit signatures  # who built the tarball, and from which commit
+    npm test              # 153 tests, in the repo
+
+The tests also run on every push to main, on Node 20 and 22, at
+https://github.com/accrualtools/accrual/actions/workflows/tests.yml
+One job installs the packed tarball and drives the CLI and the MCP server
+through it, because a suite run from the source tree cannot see a packaging
+failure. Releases published by the workflow carry GitHub provenance in a public
+transparency log; version 0.1.0 was published by hand and has a registry
+signature but no provenance.
+
 ## What this is
 
 Every tokenized treasury product quotes a yield. Almost none publish the
@@ -85,7 +99,7 @@ a sibling note says why.
 
 ## Verification
 
-152 tests. Run `npm test`.
+153 tests. Run `npm test`.
 
 The library: hand-traced expected values for the 30/360 variants, round-trip
 checks between accrual and present value, a check that convexity genuinely
