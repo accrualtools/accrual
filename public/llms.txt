@@ -85,7 +85,7 @@ a sibling note says why.
 
 ## Verification
 
-151 tests. Run `npm test`.
+152 tests. Run `npm test`.
 
 The library: hand-traced expected values for the 30/360 variants, round-trip
 checks between accrual and present value, a check that convexity genuinely

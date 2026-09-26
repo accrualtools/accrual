@@ -9,7 +9,7 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import * as src from '../src/index.mjs';
@@ -190,6 +190,40 @@ test('every buy link points at this token, not at the launchpad index', async ()
     for (const addr of found) {
       assert.equal(addr, declared.toLowerCase(), `${rel} quotes a second address: ${addr}`);
     }
+  }
+});
+
+test('every rendered png matches the shape of the svg it came from', async () => {
+  // The PNGs were once all rendered at a hard-coded 1600x900, which stretched
+  // the 1500x500 banner without raising anything. A wrong aspect ratio is
+  // invisible to every other check here, so compare the two directly.
+  const { intrinsicSize } = await import('../scripts/render-images.mjs');
+  const dir = join(root, 'public');
+  const svgs = (await readdir(dir)).filter((f) => f.endsWith('.svg'));
+  assert.ok(svgs.length > 5, 'expected the svg set, found almost none');
+
+  for (const file of svgs) {
+    const size = intrinsicSize(await readFile(join(dir, file), 'utf8'));
+    assert.ok(size, `${file} declares neither a viewBox nor a width and height`);
+
+    const png = join(dir, file.replace(/\.svg$/, '.png'));
+    let bytes;
+    try {
+      bytes = await readFile(png);
+    } catch {
+      continue; // not every svg is published as a bitmap
+    }
+
+    // PNG IHDR: 8-byte signature, 4-byte length, 4-byte type, then w and h.
+    const width = bytes.readUInt32BE(16);
+    const height = bytes.readUInt32BE(20);
+    const declared = (size.width / size.height).toFixed(3);
+    const actual = (width / height).toFixed(3);
+    assert.equal(
+      actual,
+      declared,
+      `${file} is ${size.width}x${size.height} but its png is ${width}x${height}, so the image is distorted`
+    );
   }
 });
 

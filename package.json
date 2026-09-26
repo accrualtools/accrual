@@ -27,7 +27,8 @@
     "test": "node --test \"test/**/*.test.mjs\"",
     "cli": "node bin/accrual.mjs",
     "mcp": "node mcp/server.mjs",
-    "build": "node scripts/build.mjs"
+    "build": "node scripts/build.mjs",
+    "images": "node scripts/render-images.mjs"
   },
   "keywords": [
     "rwa",
