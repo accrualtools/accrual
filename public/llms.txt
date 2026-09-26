@@ -1,0 +1,122 @@
+# accrual
+
+Yield math for tokenized real-world assets. A library, a CLI, and an MCP server.
+
+Site: https://accrual.tools
+Token: ACCR on pons v2, Robinhood Chain
+Contract address: 0x088dcA7E3a67D55fc9E0b23b7DB24c22B35Df985
+
+## What this is
+
+Every tokenized treasury product quotes a yield. Almost none publish the
+day-count convention behind it. The same principal, the same rate and the same
+dates produce six different interest figures under the six conventions this
+library implements. That spread is not rounding, it is money.
+
+accrual computes those figures. It is a tool first; the token is how it was
+launched.
+
+## What it does
+
+- Year fraction under ACT/360, ACT/365F, ACT/ACT, 30U/360, 30/360 and 30E/360
+- Simple and compound accrued interest over a date range
+- Nominal to effective annual rate conversion, both directions
+- Present value of a single future cashflow
+- Bill discount yield versus investment yield, which are not the same number
+- Bond price, Macaulay duration, modified duration, convexity
+- Price shock estimates for a yield move, with and without convexity
+- Loan level payment, full amortisation schedule, and total interest
+- Interest-only loans with a balloon, compared against amortising
+- What overpaying saves, in interest and in months removed
+- The rate implied by a payment, nominal and effective annual
+- How much principal a given payment can support
+
+## What it cannot do
+
+It makes no network request, reads no chain state, submits no transaction and
+holds no key material. It takes numbers and dates and returns numbers. The
+package has zero runtime dependencies; src/daycount.mjs and src/accrue.mjs
+import nothing but each other. That is the whole security surface and you can
+read it in a few minutes.
+
+## For agents
+
+An MCP server over stdio exposes thirteen tools: day_count, accrue_simple,
+accrue_compound, bill_yields, bond_metrics, present_value, compare_products,
+year_fraction, loan_payment, loan_schedule, loan_payoff, loan_implied_rate and
+loan_affordable. Entry point is mcp/server.mjs, protocol version 2024-11-05.
+
+The browser bundle at https://accrual.tools/accrual.mjs is the same tested code
+as the library, assembled from src/ by a build script rather than hand-copied.
+
+## The one rule about conventions
+
+Never assume a day-count convention. The three 30/360 variants return 30, 33
+and 32 days for 2025-02-28 to 2025-03-31. If a data source does not state its
+convention, report the spread rather than silently picking one. compareConventions
+and the day_count tool exist for exactly this.
+
+One trap worth knowing: over a short period the 30/360 family can return a year
+fraction of exactly 0. From 2025-01-30 to 2025-01-31 is one actual day, which
+ACT/360 counts and 30E/360 does not. A spread expressed as a percentage of the
+lowest convention is undefined there, so day_count returns
+widestDisagreementPct as null and widestDisagreementAbs as the real gap.
+
+## How failure is reported
+
+An input with no meaningful answer is an error, not a number. Over MCP that is a
+tools/call result with isError true and the reason as text. The tools never
+return a successful response whose fields are null because something divided by
+zero, because JSON has no NaN and a null reads as "no answer given" rather than
+"that input has no meaning". Where a figure is legitimately undefined, such as
+the percentage of interest saved on an interest-free loan, the field is null and
+a sibling note says why.
+
+## Verification
+
+145 tests. Run `npm test`.
+
+The library: hand-traced expected values for the 30/360 variants, round-trip
+checks between accrual and present value, a check that convexity genuinely
+reduces price-shock error versus duration alone, and reconciliation of every
+amortisation schedule so repaid principal equals the amount borrowed and the
+closing balance is exactly zero.
+
+The CLI: every invocation printed in `--help` is run and checked to exit zero,
+and no output line may contain NaN, Infinity or undefined.
+
+The MCP server: the JSON-RPC surface itself, not just the math. Every advertised
+tool is called, every schema is checked for required keys it never describes,
+malformed input is checked to produce an error rather than a successful response,
+and no successful response may contain an unexplained null.
+
+The published browser bundle: imported and compared function by function against
+src/, so the site cannot drift from the tested code.
+
+Two expected values in the loan tests were wrong on first writing and were
+corrected against an independent 40-digit calculation rather than adjusted to
+match the code.
+
+## About the token
+
+ACCR has a fixed supply, minted to a pons v2 bonding curve at launch. The
+creator cannot mint, freeze, blacklist or raise the tax. At 4.2 ETH the curve
+closes and pool liquidity is locked.
+
+The creator's opening buy of 0.01 ETH, 5,740,664.0232 ACCR, was burned to the
+zero address. The deploying wallet holds no supply. Total supply is therefore
+994,259,336 rather than the 1,000,000,000 minted.
+
+ACCR pays no coupon and accrues nothing. It is not a security, not a claim on
+any asset, and carries no redemption right. Despite the name, holding it earns
+you nothing. The library is the product.
+
+## Not available
+
+There is no airdrop, no points programme, no staking, no private round, no
+allowlist and no API key. Anyone offering you one of these is not us.
+
+## Identifying this project
+
+pons does not enforce unique names or symbols, so anyone can deploy a token
+called accrual. Key on the contract address above and never on the name.

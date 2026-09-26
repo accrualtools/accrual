@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+
+  <rect x="80" y="80" width="1440" height="740" rx="6" fill="#111716" stroke="#1E2826" stroke-width="2"/>
+  <line x1="80" y1="188" x2="1520" y2="188" stroke="#1E2826" stroke-width="2"/>
+
+  <g font-family="DejaVu Sans Mono" font-size="26" fill="#7B8B87">
+    <text x="128" y="144">accrual · yield shock</text>
+  </g>
+  <g font-family="DejaVu Sans Mono" font-size="26" fill="#7B8B87" text-anchor="end">
+    <text x="1472" y="144">10y, 4% coupon, 5% ytm, semiannual</text>
+  </g>
+
+  <!-- left: metrics -->
+  <g font-family="DejaVu Sans Mono" font-size="25" fill="#7B8B87">
+    <text x="128" y="258">price</text>
+    <text x="128" y="346">macaulay duration</text>
+    <text x="128" y="434">modified duration</text>
+    <text x="128" y="522">convexity</text>
+  </g>
+  <g font-family="DejaVu Sans Mono" font-size="44" fill="#D8E0DD">
+    <text x="128" y="306">922.0542</text>
+    <text x="128" y="394">8.2556 y</text>
+    <text x="128" y="482">8.0542</text>
+    <text x="128" y="570">77.1117</text>
+  </g>
+  <g font-family="DejaVu Sans Mono" font-size="23" fill="#7B8B87">
+    <text x="128" y="620">modified duration is the price move per 100bp,</text>
+    <text x="128" y="652">before convexity bends it.</text>
+  </g>
+
+  <!-- divider -->
+  <line x1="800" y1="220" x2="800" y2="760" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- right: shock table -->
+  <g font-family="DejaVu Sans Mono" font-size="24" fill="#7B8B87">
+    <text x="856" y="258">shock, duration + convexity</text>
+  </g>
+  <g font-family="DejaVu Sans Mono" font-size="24" fill="#7B8B87" text-anchor="end">
+    <text x="1250" y="258">price</text>
+    <text x="1472" y="258">move</text>
+  </g>
+
+  <g font-family="DejaVu Sans Mono" font-size="34">
+    <text x="856" y="330" fill="#D8E0DD">-100 bp</text>
+    <text x="1250" y="330" fill="#D8E0DD" text-anchor="end">999.8736</text>
+    <text x="1472" y="330" fill="#B8FF3C" text-anchor="end">+8.440%</text>
+
+    <text x="856" y="398" fill="#D8E0DD">-50 bp</text>
+    <text x="1250" y="398" fill="#D8E0DD" text-anchor="end">960.0751</text>
+    <text x="1472" y="398" fill="#B8FF3C" text-anchor="end">+4.124%</text>
+
+    <text x="856" y="466" fill="#7B8B87">0</text>
+    <text x="1250" y="466" fill="#7B8B87" text-anchor="end">922.0542</text>
+    <text x="1472" y="466" fill="#7B8B87" text-anchor="end">—</text>
+
+    <text x="856" y="534" fill="#D8E0DD">+50 bp</text>
+    <text x="1250" y="534" fill="#D8E0DD" text-anchor="end">885.8108</text>
+    <text x="1472" y="534" fill="#FFB238" text-anchor="end">-3.931%</text>
+
+    <text x="856" y="602" fill="#D8E0DD">+100 bp</text>
+    <text x="1250" y="602" fill="#D8E0DD" text-anchor="end">851.3449</text>
+    <text x="1472" y="602" fill="#FFB238" text-anchor="end">-7.669%</text>
+
+    <text x="856" y="670" fill="#D8E0DD">+200 bp</text>
+    <text x="1250" y="670" fill="#D8E0DD" text-anchor="end">787.7457</text>
+    <text x="1472" y="670" fill="#FFB238" text-anchor="end">-14.566%</text>
+  </g>
+
+  <line x1="856" y1="706" x2="1472" y2="706" stroke="#1E2826" stroke-width="2"/>
+  <g font-family="DejaVu Sans Mono" font-size="23" fill="#7B8B87">
+    <text x="856" y="756">down 100bp gains more than up 100bp loses.</text>
+    <text x="856" y="788">that asymmetry is convexity.</text>
+  </g>
+</svg>

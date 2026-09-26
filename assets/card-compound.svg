@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+
+  <!-- panel -->
+  <rect x="80" y="80" width="1440" height="740" rx="6" fill="#111716" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- header rule -->
+  <line x1="80" y1="188" x2="1520" y2="188" stroke="#1E2826" stroke-width="2"/>
+
+  <g font-family="DejaVu Sans Mono" font-size="26" fill="#7B8B87">
+    <text x="128" y="144">accrual · effective annual rate</text>
+  </g>
+  <g font-family="DejaVu Sans Mono" font-size="26" fill="#7B8B87" text-anchor="end">
+    <text x="1472" y="144">1,000,000 at 4.25% nominal</text>
+  </g>
+
+  <!-- column headers -->
+  <g font-family="DejaVu Sans Mono" font-size="24" fill="#7B8B87">
+    <text x="128" y="262">compounding</text>
+  </g>
+  <g font-family="DejaVu Sans Mono" font-size="24" fill="#7B8B87" text-anchor="end">
+    <text x="1020" y="262">effective rate</text>
+    <text x="1472" y="262">interest on 1m</text>
+  </g>
+
+  <!-- rows -->
+  <g font-family="DejaVu Sans Mono" font-size="38">
+    <text x="128" y="344" fill="#D8E0DD">annual</text>
+    <text x="1020" y="344" fill="#D8E0DD" text-anchor="end">4.250000%</text>
+    <text x="1472" y="344" fill="#7B8B87" text-anchor="end">42,500.00</text>
+
+    <text x="128" y="416" fill="#D8E0DD">semiannual</text>
+    <text x="1020" y="416" fill="#D8E0DD" text-anchor="end">4.295156%</text>
+    <text x="1472" y="416" fill="#7B8B87" text-anchor="end">42,951.56</text>
+
+    <text x="128" y="488" fill="#D8E0DD">quarterly</text>
+    <text x="1020" y="488" fill="#D8E0DD" text-anchor="end">4.318215%</text>
+    <text x="1472" y="488" fill="#7B8B87" text-anchor="end">43,182.15</text>
+
+    <text x="128" y="560" fill="#D8E0DD">monthly</text>
+    <text x="1020" y="560" fill="#D8E0DD" text-anchor="end">4.333772%</text>
+    <text x="1472" y="560" fill="#7B8B87" text-anchor="end">43,337.72</text>
+
+    <text x="128" y="632" fill="#D8E0DD">daily</text>
+    <text x="1020" y="632" fill="#D8E0DD" text-anchor="end">4.341347%</text>
+    <text x="1472" y="632" fill="#7B8B87" text-anchor="end">43,413.47</text>
+
+    <text x="128" y="704" fill="#B8FF3C">continuous</text>
+    <text x="1020" y="704" fill="#B8FF3C" text-anchor="end">4.341606%</text>
+    <text x="1472" y="704" fill="#B8FF3C" text-anchor="end">43,416.06</text>
+  </g>
+
+  <line x1="128" y1="736" x2="1472" y2="736" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- footnote -->
+  <g font-family="DejaVu Sans Mono" font-size="25" fill="#7B8B87">
+    <text x="128" y="788">daily to continuous is worth 2.58 on a million</text>
+  </g>
+  <g font-family="DejaVu Sans Mono" font-size="25" fill="#FFB238" text-anchor="end">
+    <text x="1472" y="788">annual to continuous: 916.06</text>
+  </g>
+</svg>

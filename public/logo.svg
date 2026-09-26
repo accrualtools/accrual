@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="accrual: a rising step curve">
+  <rect width="512" height="512" fill="#0B0F0E"/>
+  <g fill="#1E2826">
+    <rect x="96" y="368" width="48" height="48"/>
+    <rect x="160" y="368" width="48" height="48"/>
+    <rect x="224" y="368" width="48" height="48"/>
+    <rect x="288" y="368" width="48" height="48"/>
+    <rect x="352" y="368" width="48" height="48"/>
+  </g>
+  <g fill="#B8FF3C">
+    <rect x="96" y="336" width="48" height="32"/>
+    <rect x="160" y="288" width="48" height="80"/>
+    <rect x="224" y="216" width="48" height="152"/>
+    <rect x="288" y="168" width="48" height="200"/>
+  </g>
+  <rect x="352" y="96" width="48" height="272" fill="#FFB238"/>
+  <rect x="96" y="416" width="304" height="12" fill="#B8FF3C"/>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="The MCP server can compute a valuation but cannot act on one">
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+
+  <text x="96" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87" letter-spacing="3">MCP SERVER / STDIO / 8 TOOLS</text>
+
+  <text x="96" y="204" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="52" fill="#D8E0DD">it can price a position.</text>
+  <text x="96" y="272" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="52" fill="#B8FF3C">it cannot open one.</text>
+
+  <line x1="96" y1="324" x2="1504" y2="324" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- CAN: the eight tools, named. -->
+  <text x="96" y="382" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#B8FF3C" letter-spacing="2">CAN</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#D8E0DD">
+    <text x="96" y="434">day_count</text>
+    <text x="96" y="474">accrue_simple</text>
+    <text x="96" y="514">accrue_compound</text>
+    <text x="96" y="554">bill_yields</text>
+    <text x="440" y="434">bond_metrics</text>
+    <text x="440" y="474">present_value</text>
+    <text x="440" y="514">compare_products</text>
+    <text x="440" y="554">year_fraction</text>
+  </g>
+
+  <line x1="820" y1="356" x2="820" y2="656" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- CANNOT: struck through, because absence is the claim. -->
+  <text x="884" y="382" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#FFB238" letter-spacing="2">CANNOT</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">
+    <text x="884" y="434">read chain state</text>
+    <text x="884" y="474">submit transactions</text>
+    <text x="884" y="514">hold key material</text>
+    <text x="884" y="554">make a network request</text>
+  </g>
+  <g stroke="#FFB238" stroke-width="2">
+    <line x1="884" y1="426" x2="1078" y2="426"/>
+    <line x1="884" y1="466" x2="1128" y2="466"/>
+    <line x1="884" y1="506" x2="1103" y2="506"/>
+    <line x1="884" y1="546" x2="1177" y2="546"/>
+  </g>
+
+  <rect x="96" y="628" width="1408" height="2" fill="#1E2826"/>
+
+  <text x="96" y="700" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87">you don't have to take my word for it:</text>
+  <text x="96" y="754" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30" fill="#B8FF3C">the source imports nothing outside its own directory.</text>
+  <text x="96" y="806" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87">0 dependencies. 145 of 145 tests. that's the whole audit.</text>
+
+  <text x="1504" y="806" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#B8FF3C">accrual</text>
+</svg>

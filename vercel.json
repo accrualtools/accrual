@@ -1,0 +1,33 @@
+{
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/accrual.mjs",
+      "headers": [{ "key": "Content-Type", "value": "application/javascript; charset=utf-8" }]
+    },
+    {
+      "source": "/mcp.mjs",
+      "headers": [{ "key": "Content-Type", "value": "application/javascript; charset=utf-8" }]
+    },
+    {
+      "source": "/cli.mjs",
+      "headers": [{ "key": "Content-Type", "value": "application/javascript; charset=utf-8" }]
+    },
+    {
+      "source": "/llms.txt",
+      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "no-referrer" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+        }
+      ]
+    }
+  ]
+}

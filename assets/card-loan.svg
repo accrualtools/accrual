@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <style>.m { font-family: "DejaVu Sans Mono", monospace; }</style>
+  </defs>
+
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+
+  <text class="m" x="80" y="96" font-size="42" font-weight="bold" fill="#D8E0DD">200,000 at 6.00%, 30 years</text>
+  <text class="m" x="80" y="140" font-size="26" fill="#7B8B87">what 200 a month extra is actually worth</text>
+  <line x1="80" y1="170" x2="1520" y2="170" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- left panel: as scheduled -->
+  <rect x="80" y="200" width="680" height="440" rx="14" fill="#111716" stroke="#1E2826" stroke-width="2"/>
+  <text class="m" x="112" y="250" font-size="26" fill="#7B8B87">as scheduled</text>
+
+  <text class="m" x="112" y="312" font-size="24" fill="#7B8B87">payment</text>
+  <text class="m" x="728" y="312" font-size="26" fill="#D8E0DD" text-anchor="end">1,199.10</text>
+
+  <text class="m" x="112" y="366" font-size="24" fill="#7B8B87">payments</text>
+  <text class="m" x="728" y="366" font-size="26" fill="#D8E0DD" text-anchor="end">360</text>
+
+  <text class="m" x="112" y="420" font-size="24" fill="#7B8B87">total interest</text>
+  <text class="m" x="728" y="420" font-size="26" fill="#FFB238" text-anchor="end">231,676.38</text>
+
+  <text class="m" x="112" y="474" font-size="24" fill="#7B8B87">total paid</text>
+  <text class="m" x="728" y="474" font-size="26" fill="#D8E0DD" text-anchor="end">431,676.38</text>
+
+  <line x1="112" y1="510" x2="728" y2="510" stroke="#1E2826" stroke-width="2"/>
+  <text class="m" x="112" y="556" font-size="24" fill="#7B8B87">interest as a share</text>
+  <text class="m" x="728" y="556" font-size="30" fill="#FFB238" text-anchor="end">115.8%</text>
+  <text class="m" x="112" y="598" font-size="21" fill="#7B8B87">of what you borrowed</text>
+
+  <!-- right panel: paying 200 more -->
+  <rect x="840" y="200" width="680" height="440" rx="14" fill="#111716" stroke="#1E2826" stroke-width="2"/>
+  <text class="m" x="872" y="250" font-size="26" fill="#B8FF3C">paying 200 more</text>
+
+  <text class="m" x="872" y="312" font-size="24" fill="#7B8B87">payment</text>
+  <text class="m" x="1488" y="312" font-size="26" fill="#D8E0DD" text-anchor="end">1,399.10</text>
+
+  <text class="m" x="872" y="366" font-size="24" fill="#7B8B87">payments</text>
+  <text class="m" x="1488" y="366" font-size="26" fill="#B8FF3C" text-anchor="end">252</text>
+
+  <text class="m" x="872" y="420" font-size="24" fill="#7B8B87">total interest</text>
+  <text class="m" x="1488" y="420" font-size="26" fill="#B8FF3C" text-anchor="end">151,875.87</text>
+
+  <text class="m" x="872" y="474" font-size="24" fill="#7B8B87">total paid</text>
+  <text class="m" x="1488" y="474" font-size="26" fill="#D8E0DD" text-anchor="end">351,875.87</text>
+
+  <line x1="872" y1="510" x2="1488" y2="510" stroke="#1E2826" stroke-width="2"/>
+  <text class="m" x="872" y="556" font-size="24" fill="#7B8B87">paid off earlier by</text>
+  <text class="m" x="1488" y="556" font-size="30" fill="#B8FF3C" text-anchor="end">9 years</text>
+  <text class="m" x="872" y="598" font-size="21" fill="#7B8B87">108 payments removed</text>
+
+  <!-- the punchline -->
+  <rect x="80" y="676" width="1440" height="128" rx="14" fill="#111716" stroke="#1E2826" stroke-width="2"/>
+  <text class="m" x="112" y="726" font-size="25" fill="#7B8B87">you pay</text>
+  <text class="m" x="290" y="726" font-size="25" fill="#D8E0DD">50,400.00 extra</text>
+  <text class="m" x="640" y="726" font-size="25" fill="#7B8B87">and you save</text>
+  <text class="m" x="930" y="726" font-size="25" fill="#B8FF3C">79,800.51</text>
+  <text class="m" x="112" y="774" font-size="22" fill="#7B8B87">every extra unit goes to principal, so it removes all the future interest that principal carried</text>
+
+  <text class="m" x="80" y="866" font-size="22" fill="#7B8B87">accrual loan --principal 200000 --rate 6 --years 30</text>
+  <text class="m" x="1520" y="866" font-size="22" fill="#7B8B87" text-anchor="end">accrual.tools</text>
+</svg>

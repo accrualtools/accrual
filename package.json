@@ -1,0 +1,45 @@
+{
+  "name": "accrual",
+  "version": "0.1.0",
+  "description": "Yield math for tokenized real-world assets. Day-count conventions, accrued interest, discount, and duration. No RPC, no keys, no signing.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./daycount": "./src/daycount.mjs",
+    "./accrue": "./src/accrue.mjs",
+    "./amortise": "./src/amortise.mjs",
+    "./mcp": "./mcp/server.mjs",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "accrual": "./bin/accrual.mjs",
+    "accrual-mcp": "./mcp/server.mjs"
+  },
+  "files": [
+    "src",
+    "bin",
+    "mcp",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "cli": "node bin/accrual.mjs",
+    "mcp": "node mcp/server.mjs",
+    "build": "node scripts/build.mjs"
+  },
+  "keywords": [
+    "rwa",
+    "yield",
+    "day-count",
+    "accrued-interest",
+    "duration",
+    "fixed-income",
+    "agent-tools",
+    "mcp"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "homepage": "https://accrual.tools"
+}

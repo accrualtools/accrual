@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Discount yield versus investment yield on the same treasury bill">
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+
+  <text x="96" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87" letter-spacing="3">ONE BILL. TWO YIELDS. BOTH CORRECT.</text>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87">
+    <text x="96" y="182">face 100.00</text>
+    <text x="340" y="182">price 97.80</text>
+    <text x="584" y="182">182 days</text>
+    <text x="800" y="182">gain 2.20</text>
+  </g>
+
+  <line x1="96" y1="220" x2="1504" y2="220" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- Left: how it is quoted. -->
+  <rect x="96" y="272" width="640" height="368" fill="#111716" stroke="#1E2826" stroke-width="2"/>
+  <text x="140" y="332" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87" letter-spacing="2">HOW IT IS QUOTED</text>
+  <text x="140" y="402" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30" fill="#D8E0DD">discount yield</text>
+  <text x="140" y="500" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="76" fill="#D8E0DD">4.3516%</text>
+  <line x1="140" y1="536" x2="692" y2="536" stroke="#1E2826" stroke-width="2"/>
+  <text x="140" y="580" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87">gain / FACE, over 360 days</text>
+  <text x="140" y="612" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" fill="#7B8B87">divides by what you get back</text>
+
+  <!-- Right: what you actually earn. -->
+  <rect x="864" y="272" width="640" height="368" fill="#111716" stroke="#B8FF3C" stroke-width="2"/>
+  <text x="908" y="332" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#B8FF3C" letter-spacing="2">WHAT YOU ACTUALLY EARN</text>
+  <text x="908" y="402" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="30" fill="#D8E0DD">investment yield</text>
+  <text x="908" y="500" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="76" fill="#B8FF3C">4.5113%</text>
+  <line x1="908" y1="536" x2="1460" y2="536" stroke="#1E2826" stroke-width="2"/>
+  <text x="908" y="580" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87">gain / PRICE, over 365 days</text>
+  <text x="908" y="612" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" fill="#7B8B87">divides by what you paid</text>
+
+  <!-- The gap between them, drawn as a measured span. -->
+  <g stroke="#FFB238" stroke-width="3" fill="none">
+    <line x1="740" y1="456" x2="856" y2="456"/>
+    <path d="M 844 448 L 856 456 L 844 464"/>
+  </g>
+
+  <text x="800" y="712" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="58" fill="#FFB238">16.0 bp of pure convention</text>
+
+  <line x1="96" y1="768" x2="1504" y2="768" stroke="#1E2826" stroke-width="2"/>
+
+  <text x="96" y="826" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#D8E0DD">both numbers are right. only one of them is yours.</text>
+  <text x="1504" y="826" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#B8FF3C">accrual</text>
+</svg>

@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>accrual ($ACCR) — show the math or it isn't yield</title>
+<meta name="description" content="Yield math for tokenized real-world assets. Day-count conventions, accrued interest, duration, convexity. Runs in your browser, as a CLI, or as an MCP server for agents. No RPC, no keys.">
+<link rel="icon" href="/mark.svg">
+<link rel="alternate" type="application/json" href="/agent.json">
+<meta property="og:type" content="website">
+<meta property="og:title" content="accrual ($ACCR) — show the math or it isn't yield">
+<meta property="og:description" content="Day-count conventions, accrued interest, duration, convexity. A tool, not a promise.">
+<meta property="og:url" content="https://accrual.tools/">
+<meta property="og:image" content="https://accrual.tools/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://accrual.tools/og.png">
+<style>
+  :root{
+    --bg:#0B0F0E;
+    --panel:#111716;
+    --line:#1E2826;
+    --ink:#D8E0DD;
+    --dim:#7B8B87;
+    --acid:#B8FF3C;
+    --amber:#FFB238;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.6 var(--mono);
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  a{color:var(--acid);text-decoration:none;border-bottom:1px solid #2F4A1E}
+  a:hover{border-bottom-color:var(--acid)}
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{
+    outline:2px solid var(--acid);outline-offset:2px
+  }
+
+  /* masthead */
+  header{border-bottom:1px solid var(--line)}
+  .bar{
+    display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+    padding:9px 0;font-size:11.5px;letter-spacing:.14em;color:var(--dim);
+    text-transform:uppercase;border-bottom:1px solid var(--line)
+  }
+  .dot{width:7px;height:7px;background:var(--acid);border-radius:50%;flex:none}
+  .masthead{display:flex;gap:26px;align-items:flex-start;padding:34px 0 30px;flex-wrap:wrap}
+  h1{
+    margin:0;font-size:clamp(46px,11vw,84px);line-height:.88;
+    letter-spacing:-.045em;font-weight:700;font-family:Helvetica,Arial,sans-serif
+  }
+  .tick{
+    display:inline-block;margin-top:14px;padding:5px 11px;
+    background:var(--acid);color:#0B0F0E;font-weight:700;letter-spacing:.1em;font-size:13px
+  }
+  .lede{max-width:44ch;font-size:16px;color:var(--ink);margin:6px 0 0}
+  .lede b{color:var(--acid);font-weight:400}
+
+  /* sections */
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  h2{
+    margin:0 0 4px;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--amber);font-weight:700
+  }
+  .sub{margin:0 0 22px;color:var(--dim);font-size:14px;max-width:62ch}
+
+  /* calculator */
+  .calc{border:1px solid var(--line);background:var(--panel)}
+  .tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+  .tabs button{
+    flex:1 1 auto;min-width:104px;padding:13px 10px;background:none;border:0;
+    border-right:1px solid var(--line);color:var(--dim);font:inherit;font-size:12px;
+    letter-spacing:.14em;text-transform:uppercase;cursor:pointer
+  }
+  .tabs button:last-child{border-right:0}
+  .tabs button[aria-selected="true"]{background:var(--acid);color:#0B0F0E;font-weight:700}
+  .pane{padding:22px}
+  .pane[hidden]{display:none}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:14px 18px}
+  label{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+  input,select{
+    width:100%;padding:9px 10px;background:#0B0F0E;color:var(--ink);
+    border:1px solid var(--line);font:inherit;font-size:15px;border-radius:0
+  }
+  input:hover,select:hover{border-color:#31403D}
+  .out{margin-top:22px;border-top:1px solid var(--line);padding-top:18px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:7px 10px 7px 0;border-bottom:1px solid var(--line)}
+  th{color:var(--dim);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  td.n{text-align:right;font-variant-numeric:tabular-nums;padding-right:0}
+  tr.hit td{color:var(--acid)}
+  .big{font-size:clamp(28px,6vw,42px);line-height:1.1;letter-spacing:-.03em;color:var(--acid);font-family:Helvetica,Arial,sans-serif;font-weight:700}
+  .kv{display:flex;justify-content:space-between;gap:18px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .kv span:first-child{color:var(--dim);font-size:13px}
+  .kv span:last-child{font-variant-numeric:tabular-nums}
+  .warn{color:var(--amber);font-size:13px;margin-top:14px}
+  .scroll{overflow-x:auto}
+
+  /* facts strip */
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(172px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .facts div{background:var(--panel);padding:16px}
+  .facts dt{color:var(--dim);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 6px}
+  .facts dd{margin:0;font-size:16px}
+
+  /* code */
+  pre{
+    margin:0;padding:16px;background:var(--panel);border:1px solid var(--line);
+    overflow-x:auto;font-size:13.5px;line-height:1.7
+  }
+  pre .c{color:var(--dim)}
+  pre .k{color:var(--amber)}
+  .stack{display:grid;gap:14px}
+
+  /* terms */
+  dl.terms{margin:0;display:grid;grid-template-columns:auto 1fr;gap:0}
+  dl.terms dt{padding:9px 20px 9px 0;color:var(--dim);border-bottom:1px solid var(--line);font-size:13px;white-space:nowrap}
+  dl.terms dd{margin:0;padding:9px 0;border-bottom:1px solid var(--line)}
+
+  .ca{
+    border:1px dashed #31403D;padding:14px;margin-top:16px;
+    word-break:break-all;font-size:14px
+  }
+  .ca span{color:var(--dim);display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+  nav.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+  nav.links a{
+    border:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 15px;
+    color:var(--ink);font-size:13px
+  }
+  nav.links a:hover{border-color:var(--acid);color:var(--acid)}
+  footer{padding:34px 0 50px;color:var(--dim);font-size:13px}
+  footer p{margin:0 0 9px;max-width:76ch}
+  @media (max-width:560px){
+    dl.terms{grid-template-columns:1fr}
+    dl.terms dt{border-bottom:0;padding-bottom:0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="bar">
+      <span class="dot" aria-hidden="true"></span>
+      <span>pons v2</span><span>robinhood chain</span>
+      <span>fixed supply</span><span>launch fee 0.0005 ETH</span><span>graduation 4.2 ETH</span>
+    </div>
+    <div class="masthead">
+      <div>
+        <h1>accrual</h1>
+        <div class="tick">$ACCR</div>
+      </div>
+      <p class="lede">
+        Yield math for tokenized real-world assets. Day-count conventions, accrued
+        interest, duration, convexity. <b>It runs.</b> In this page, as a CLI, and
+        as an MCP server your agent can call.
+      </p>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>the problem</h2>
+    <p class="sub">
+      Every tokenized treasury product quotes a yield. Almost none publish the
+      day-count convention behind it. Same principal, same rate, same dates, six
+      conventions, six different numbers. The spread is not rounding, it is money,
+      and it is the first thing a settlement desk checks and the last thing a deck
+      mentions.
+    </p>
+    <dl class="facts">
+      <div><dt>conventions implemented</dt><dd>6</dd></div>
+      <div><dt>30/360 variants</dt><dd>3, not interchangeable</dd></div>
+      <div><dt>runtime dependencies</dt><dd>0</dd></div>
+      <div><dt>tests passing</dt><dd>145 / 145</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>calculator</h2>
+    <p class="sub">
+      Runs entirely in this page. Nothing is sent anywhere, there is no analytics
+      and no network call. Change a field and the numbers move.
+    </p>
+
+    <div class="calc">
+      <div class="tabs" role="tablist" aria-label="calculators">
+        <button role="tab" id="tab-days" aria-controls="pane-days" aria-selected="true">day count</button>
+        <button role="tab" id="tab-accrue" aria-controls="pane-accrue" aria-selected="false">accrual</button>
+        <button role="tab" id="tab-bill" aria-controls="pane-bill" aria-selected="false">bill yield</button>
+        <button role="tab" id="tab-bond" aria-controls="pane-bond" aria-selected="false">duration</button>
+      </div>
+
+      <div class="pane" id="pane-days" role="tabpanel" aria-labelledby="tab-days">
+        <div class="grid">
+          <div><label for="d-from">from</label><input id="d-from" type="date" value="2025-02-28"></div>
+          <div><label for="d-to">to</label><input id="d-to" type="date" value="2025-03-31"></div>
+        </div>
+        <div class="out">
+          <div class="scroll"><table>
+            <thead><tr><th scope="col">convention</th><th scope="col" class="n">year fraction</th><th scope="col" class="n">days</th></tr></thead>
+            <tbody id="d-rows"></tbody>
+          </table></div>
+          <p class="warn" id="d-spread"></p>
+        </div>
+      </div>
+
+      <div class="pane" id="pane-accrue" role="tabpanel" aria-labelledby="tab-accrue" hidden>
+        <div class="grid">
+          <div><label for="a-principal">principal</label><input id="a-principal" type="number" value="1000000" step="1000" min="0"></div>
+          <div><label for="a-rate">rate %</label><input id="a-rate" type="number" value="4.25" step="0.01"></div>
+          <div><label for="a-from">from</label><input id="a-from" type="date" value="2025-01-01"></div>
+          <div><label for="a-to">to</label><input id="a-to" type="date" value="2025-04-01"></div>
+          <div>
+            <label for="a-comp">compounding</label>
+            <select id="a-comp">
+              <option value="0">simple</option><option value="1">annual</option>
+              <option value="2">semi-annual</option><option value="4">quarterly</option>
+              <option value="12">monthly</option><option value="365">daily</option>
+              <option value="inf">continuous</option>
+            </select>
+          </div>
+        </div>
+        <div class="out">
+          <div class="big" id="a-interest">—</div>
+          <div id="a-kv"></div>
+          <div class="scroll"><table>
+            <thead><tr><th scope="col">convention</th><th scope="col" class="n">interest</th><th scope="col" class="n">vs ACT/360</th></tr></thead>
+            <tbody id="a-rows"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <div class="pane" id="pane-bill" role="tabpanel" aria-labelledby="tab-bill" hidden>
+        <div class="grid">
+          <div><label for="b-face">face</label><input id="b-face" type="number" value="100" step="1" min="0"></div>
+          <div><label for="b-price">price</label><input id="b-price" type="number" value="97.80" step="0.01" min="0"></div>
+          <div><label for="b-settle">settle</label><input id="b-settle" type="date" value="2025-01-02"></div>
+          <div><label for="b-mat">maturity</label><input id="b-mat" type="date" value="2025-07-03"></div>
+        </div>
+        <div class="out">
+          <div class="big" id="b-inv">—</div>
+          <p class="sub" style="margin:4px 0 16px">investment yield, the one you earn</p>
+          <div id="b-kv"></div>
+        </div>
+      </div>
+
+      <div class="pane" id="pane-bond" role="tabpanel" aria-labelledby="tab-bond" hidden>
+        <div class="grid">
+          <div><label for="n-face">face</label><input id="n-face" type="number" value="1000" step="100" min="0"></div>
+          <div><label for="n-coupon">coupon %</label><input id="n-coupon" type="number" value="4" step="0.125"></div>
+          <div><label for="n-yield">yield %</label><input id="n-yield" type="number" value="5" step="0.125"></div>
+          <div><label for="n-years">years</label><input id="n-years" type="number" value="10" step="1" min="0.5"></div>
+          <div>
+            <label for="n-freq">coupons / year</label>
+            <select id="n-freq"><option value="1">1</option><option value="2" selected>2</option><option value="4">4</option></select>
+          </div>
+        </div>
+        <div class="out">
+          <div class="big" id="n-price">—</div>
+          <div id="n-kv"></div>
+          <div class="scroll"><table>
+            <thead><tr><th scope="col">yield shock</th><th scope="col" class="n">price</th><th scope="col" class="n">change</th></tr></thead>
+            <tbody id="n-rows"></tbody>
+          </table></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>for agents</h2>
+    <p class="sub">
+      The same math as an MCP server over stdio, thirteen tools. It is a pure function
+      over numbers: no RPC client, no signer, no key material anywhere in the
+      package. It can value a position and cannot move one. Verify by reading the
+      imports, there are none outside the source directory.
+    </p>
+    <div class="stack">
+<pre><span class="c">// claude_desktop_config.json, or any MCP client</span>
+{
+  <span class="k">"mcpServers"</span>: {
+    <span class="k">"accrual"</span>: { <span class="k">"command"</span>: <span class="k">"node"</span>, <span class="k">"args"</span>: [<span class="k">"mcp/server.mjs"</span>] }
+  }
+}</pre>
+<pre><span class="c">// tools exposed</span>
+day_count         <span class="c">every convention for one date pair, and the spread</span>
+accrue_simple     <span class="c">simple interest, plus the same result under all six</span>
+accrue_compound   <span class="c">compound interest and the effective annual rate</span>
+bill_yields       <span class="c">discount yield vs the yield you actually earn</span>
+bond_metrics      <span class="c">price, duration, convexity, cashflow schedule</span>
+present_value     <span class="c">one future cashflow, discounted</span>
+compare_products  <span class="c">two offers on the same footing</span>
+year_fraction     <span class="c">one convention, when you know which you need</span>
+loan_payment      <span class="c">level payment, total interest, first-payment split</span>
+loan_schedule     <span class="c">every row, closing at exactly zero</span>
+loan_payoff       <span class="c">what overpaying saves, in money and in months</span>
+loan_implied_rate <span class="c">the rate behind a payment, nominal and effective</span>
+loan_affordable   <span class="c">what a given payment can borrow</span></pre>
+<pre><span class="c">// or from a shell</span>
+$ accrual days   --from 2025-02-28 --to 2025-03-31
+$ accrual bill   --face 100 --price 97.80 --settle 2025-01-02 --maturity 2025-07-03
+$ accrual loan   --principal 200000 --rate 6 --years 30
+$ accrual payoff --principal 200000 --rate 6 --years 30 --extra 200</pre>
+    </div>
+    <nav class="links">
+      <a href="/agent.json">agent.json</a>
+      <a href="/llms.txt">llms.txt</a>
+      <a href="/accrual.mjs">accrual.mjs</a>
+      <a href="/mcp.mjs">mcp server</a>
+    </nav>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>the token</h2>
+    <p class="sub">
+      $ACCR is a fixed-supply token on pons v2. It is not a claim on anything, it
+      pays no coupon and it does not accrue. The tools above are the product; the
+      token is just how this was launched.
+    </p>
+    <dl class="terms">
+      <dt>supply</dt><dd>fixed at launch, 100% minted to the bonding curve</dd>
+      <dt>creator can mint</dt><dd>no</dd>
+      <dt>creator can freeze</dt><dd>no</dd>
+      <dt>creator can blacklist</dt><dd>no</dd>
+      <dt>liquidity at graduation</dt><dd>locked permanently, withdrawable by nobody</dd>
+      <dt>snipe tax</dt><dd>99% → 0% across 5 seconds, buys only</dd>
+      <dt>yield to holders</dt><dd>none. this is a tool, not an instrument</dd>
+    </dl>
+    <div class="ca">
+      <span>contract address</span>
+      <code>0x088dcA7E3a67D55fc9E0b23b7DB24c22B35Df985</code>
+    </div>
+    <nav class="links">
+      <a href="https://ponsfamily.com/launchpad">buy on pons</a>
+      <a href="https://x.com/accrualtools">x / accrualtools</a>
+    </nav>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>
+      Every number on this page is computed in your browser from the formulas in
+      accrual.mjs. Nothing is fetched and nothing is reported. The library is MIT.
+    </p>
+    <p>
+      This is calculation software, not financial advice, not a quote, and not a
+      valuation you should settle against. Day-count implementations follow ISDA
+      2006 section 4.16 and ICMA Rule 251; confirm the convention in your own
+      documents before you rely on a number.
+    </p>
+    <p>
+      $ACCR is not a security and carries no claim, coupon or redemption right.
+      pons does not audit or endorse tokens, and does not enforce unique names or
+      symbols, so key on the contract address and never on the name.
+    </p>
+  </div>
+</footer>
+
+<script type="module" src="/app.mjs"></script>
+</body>
+</html>

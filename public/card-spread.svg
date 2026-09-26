@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Six day-count conventions produce six different year fractions for the same dates">
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+
+  <text x="96" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87" letter-spacing="3">SAME PRINCIPAL. SAME RATE. SAME DATES.</text>
+  <text x="96" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="58" fill="#D8E0DD">2025-02-28 &#8594; 2025-03-31</text>
+  <text x="96" y="230" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87">31 actual days</text>
+
+  <line x1="96" y1="268" x2="1504" y2="268" stroke="#1E2826" stroke-width="2"/>
+
+  <!-- Column headings -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" fill="#7B8B87" letter-spacing="2">
+    <text x="96" y="312">CONVENTION</text>
+    <text x="520" y="312">YEAR FRACTION</text>
+    <text x="900" y="312">DAYS</text>
+    <text x="1096" y="312">EXCESS OVER THE NARROWEST</text>
+  </g>
+
+  <!-- The bars show each convention's excess over the narrowest, not the absolute
+       value. Absolute bars would all look identical and a truncated axis would
+       overstate the gap; this shows the actual difference at full scale. -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="32">
+    <text x="96" y="382" fill="#D8E0DD">ACT/360</text>
+    <text x="520" y="382" fill="#D8E0DD">0.08611111</text>
+    <text x="900" y="382" fill="#7B8B87">31 / 360</text>
+    <rect x="1096" y="360" width="116" height="26" fill="#B8FF3C"/>
+    <text x="1228" y="382" font-size="22" fill="#7B8B87">+3.33%</text>
+
+    <text x="96" y="446" fill="#D8E0DD">ACT/365F</text>
+    <text x="520" y="446" fill="#D8E0DD">0.08493151</text>
+    <text x="900" y="446" fill="#7B8B87">31 / 365</text>
+    <rect x="1096" y="424" width="67" height="26" fill="#B8FF3C"/>
+    <text x="1228" y="446" font-size="22" fill="#7B8B87">+1.92%</text>
+
+    <text x="96" y="510" fill="#D8E0DD">ACT/ACT</text>
+    <text x="520" y="510" fill="#D8E0DD">0.08493151</text>
+    <text x="900" y="510" fill="#7B8B87">31 / 365</text>
+    <rect x="1096" y="488" width="67" height="26" fill="#B8FF3C"/>
+    <text x="1228" y="510" font-size="22" fill="#7B8B87">+1.92%</text>
+
+    <text x="96" y="574" fill="#D8E0DD">30U/360</text>
+    <text x="520" y="574" fill="#D8E0DD">0.08333333</text>
+    <text x="900" y="574" fill="#7B8B87">30 / 360</text>
+    <line x1="1096" y1="552" x2="1096" y2="578" stroke="#FFB238" stroke-width="4"/>
+    <text x="1120" y="574" font-size="22" fill="#FFB238">narrowest</text>
+
+    <text x="96" y="638" fill="#D8E0DD">30/360</text>
+    <text x="520" y="638" fill="#D8E0DD">0.09166667</text>
+    <text x="900" y="638" fill="#7B8B87">33 / 360</text>
+    <rect x="1096" y="616" width="348" height="26" fill="#FFB238"/>
+    <text x="1456" y="638" font-size="22" fill="#FFB238">+10.00%</text>
+
+    <text x="96" y="702" fill="#D8E0DD">30E/360</text>
+    <text x="520" y="702" fill="#D8E0DD">0.08888889</text>
+    <text x="900" y="702" fill="#7B8B87">32 / 360</text>
+    <rect x="1096" y="680" width="232" height="26" fill="#B8FF3C"/>
+    <text x="1344" y="702" font-size="22" fill="#7B8B87">+6.67%</text>
+  </g>
+
+  <line x1="96" y1="756" x2="1504" y2="756" stroke="#1E2826" stroke-width="2"/>
+
+  <text x="96" y="812" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="38" fill="#FFB238">10.000% apart</text>
+  <text x="440" y="812" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87">between the extremes. not rounding.</text>
+
+  <text x="1504" y="812" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#B8FF3C">accrual</text>
+</svg>

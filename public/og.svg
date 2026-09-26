@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="accrual — show the math or it isn't yield">
+  <rect width="1200" height="630" fill="#0B0F0E"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#B8FF3C"/>
+
+  <g fill="#1E2826">
+    <rect x="72" y="452" width="34" height="34"/>
+    <rect x="118" y="452" width="34" height="34"/>
+    <rect x="164" y="452" width="34" height="34"/>
+    <rect x="210" y="452" width="34" height="34"/>
+    <rect x="256" y="452" width="34" height="34"/>
+  </g>
+  <g fill="#B8FF3C">
+    <rect x="72" y="430" width="34" height="22"/>
+    <rect x="118" y="398" width="34" height="54"/>
+    <rect x="164" y="350" width="34" height="102"/>
+    <rect x="210" y="318" width="34" height="134"/>
+  </g>
+  <rect x="256" y="264" width="34" height="188" fill="#FFB238"/>
+  <rect x="72" y="486" width="218" height="8" fill="#B8FF3C"/>
+
+  <text x="72" y="164" fill="#D8E0DD" font-family="Helvetica,Arial,sans-serif" font-size="112" font-weight="700" letter-spacing="-6">accrual</text>
+  <rect x="72" y="196" width="150" height="46" fill="#B8FF3C"/>
+  <text x="88" y="230" fill="#0B0F0E" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="28" font-weight="700" letter-spacing="2">$ACCR</text>
+
+  <text x="360" y="352" fill="#D8E0DD" font-family="Helvetica,Arial,sans-serif" font-size="52" font-weight="700" letter-spacing="-2">show the math</text>
+  <text x="360" y="414" fill="#B8FF3C" font-family="Helvetica,Arial,sans-serif" font-size="52" font-weight="700" letter-spacing="-2">or it isn't yield.</text>
+
+  <g fill="#7B8B87" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="20" letter-spacing="3">
+    <text x="360" y="486">6 DAY-COUNT CONVENTIONS</text>
+    <text x="360" y="518">0 DEPENDENCIES</text>
+    <text x="360" y="550">8 MCP TOOLS FOR AGENTS</text>
+  </g>
+
+  <text x="1128" y="592" fill="#7B8B87" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="20" letter-spacing="3" text-anchor="end">ACCRUAL.TOOLS</text>
+</svg>
