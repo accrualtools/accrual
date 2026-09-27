@@ -261,3 +261,78 @@ wire(['b-face', 'b-price', 'b-settle', 'b-mat'], renderBill, $('b-inv'), [$('b-k
 wire(['n-face', 'n-coupon', 'n-yield', 'n-years', 'n-freq'], renderBond, $('n-price'), [$('n-kv'), $('n-rows')]);
 wire(['l-principal', 'l-rate', 'l-years', 'l-freq', 'l-extra'], renderLoan, $('l-payment'), [$('l-kv'), $('l-save'), $('l-rows')]);
 wire(['c-a-rate', 'c-a-freq', 'c-b-rate', 'c-b-freq'], renderCompare, $('c-winner'), [$('c-rows'), $('c-note')]);
+
+/* Shareable permalinks. A calculation is only worth showing someone if they can
+   see the same numbers, so the whole state — which tab, every field in it —
+   rides in the URL hash. Nothing leaves the page: the hash is read and written
+   locally and the copy uses the clipboard, so the "nothing is sent anywhere"
+   promise above still holds. Values are only ever assigned to input.value, never
+   to innerHTML, so a hand-edited link can change the numbers but cannot inject.*/
+const DEFAULT_SHARE_MSG = 'every input above lives in the link, nothing is sent anywhere';
+const paneOf = (tab) => $(tab.getAttribute('aria-controls'));
+const fieldsIn = (pane) => [...pane.querySelectorAll('input[id], select[id]')];
+const activeTab = () => tabs.find((t) => t.getAttribute('aria-selected') === 'true') || tabs[0];
+
+/* Only the active tab's fields are encoded: a link means "look at this", and the
+   panes the sender never opened carry their defaults, so writing them would just
+   make the URL longer without saying anything. */
+function stateToHash() {
+  const tab = activeTab();
+  const p = new URLSearchParams();
+  p.set('t', tab.id.replace(/^tab-/, ''));
+  for (const el of fieldsIn(paneOf(tab))) p.set(el.id, el.value);
+  return '#' + p.toString();
+}
+
+/* replaceState, not pushState: typing must not bury the back button under one
+   history entry per keystroke. */
+function syncUrl() {
+  history.replaceState(null, '', stateToHash());
+}
+
+function applyHash() {
+  const raw = location.hash.replace(/^#/, '');
+  if (!raw) return false;
+  const p = new URLSearchParams(raw);
+  const tab = p.get('t') && $('tab-' + p.get('t'));
+  if (!tab) return false;
+  tab.click(); // reuses the tab handler, so aria state and hidden panes stay correct
+  let touched = null;
+  for (const el of fieldsIn(paneOf(tab))) {
+    if (p.has(el.id)) { el.value = p.get(el.id); touched = el; }
+  }
+  // One event is enough: each wired render re-reads every field its calculator owns.
+  if (touched) touched.dispatchEvent(new Event('input', { bubbles: true }));
+  return true;
+}
+
+const calc = document.querySelector('.calc');
+function onCalcChange() {
+  syncUrl();
+  $('share-msg').textContent = DEFAULT_SHARE_MSG;
+}
+calc.addEventListener('input', onCalcChange);
+calc.addEventListener('change', onCalcChange);
+tabs.forEach((t) => t.addEventListener('click', onCalcChange));
+
+$('share-copy').addEventListener('click', async () => {
+  syncUrl();
+  const url = location.href;
+  const msg = $('share-msg');
+  try {
+    await navigator.clipboard.writeText(url);
+    msg.textContent = 'link copied. it reproduces exactly these inputs, offline.';
+  } catch {
+    // Clipboard blocked (no permission, or an insecure context): show the link
+    // so it can still be copied by hand rather than failing silently.
+    msg.textContent = url;
+  }
+});
+
+// A pasted or hand-edited link should take effect; replaceState above never
+// fires this, so there is no loop.
+window.addEventListener('hashchange', applyHash);
+
+// Restore last, after every calculator is wired, so the dispatched input lands
+// on live listeners.
+applyHash();

@@ -76,6 +76,13 @@
   }
   .tabs button:last-child{border-right:0}
   .tabs button[aria-selected="true"]{background:var(--acid);color:#0B0F0E;font-weight:700}
+  .sharebar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:11px 22px;border-bottom:1px solid var(--line)}
+  .sharebar button{
+    background:none;border:1px solid var(--line);color:var(--ink);font:inherit;font-size:11px;
+    letter-spacing:.14em;text-transform:uppercase;padding:8px 13px;cursor:pointer
+  }
+  .sharebar button:hover{border-color:var(--acid);color:var(--acid)}
+  .sharebar span{color:var(--dim);font-size:12px;font-variant-numeric:tabular-nums}
   .pane{padding:22px}
   .pane[hidden]{display:none}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:14px 18px}
@@ -174,7 +181,7 @@
       <div><dt>conventions implemented</dt><dd>6</dd></div>
       <div><dt>30/360 variants</dt><dd>3, not interchangeable</dd></div>
       <div><dt>runtime dependencies</dt><dd>0</dd></div>
-      <div><dt>tests passing</dt><dd>155 / 155</dd></div>
+      <div><dt>tests passing</dt><dd>156 / 156</dd></div>
     </dl>
   </div>
 </section>
@@ -195,6 +202,11 @@
         <button role="tab" id="tab-bond" aria-controls="pane-bond" aria-selected="false">duration</button>
         <button role="tab" id="tab-loan" aria-controls="pane-loan" aria-selected="false">loan</button>
         <button role="tab" id="tab-cmp" aria-controls="pane-cmp" aria-selected="false">compare</button>
+      </div>
+
+      <div class="sharebar">
+        <button id="share-copy" type="button">copy link to this calculation</button>
+        <span id="share-msg">every input above lives in the link, nothing is sent anywhere</span>
       </div>
 
       <div class="pane" id="pane-days" role="tabpanel" aria-labelledby="tab-days">

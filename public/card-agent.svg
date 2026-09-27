@@ -46,7 +46,7 @@
   <rect x="96" y="700" width="1408" height="2" fill="#1E2826"/>
 
   <text x="96" y="758" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="29" fill="#B8FF3C">the source imports nothing outside its own directory.</text>
-  <text x="96" y="808" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">0 dependencies. 155 of 155 tests. that's the whole audit.</text>
+  <text x="96" y="808" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">0 dependencies. 156 of 156 tests. that's the whole audit.</text>
 
   <text x="1504" y="806" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#B8FF3C">accrual</text>
 </svg>

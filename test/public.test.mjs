@@ -116,6 +116,32 @@ test('every calculator clears its detail regions when a render fails', async () 
   assert.match(app, /for \(const el of stale\) if \(el\) el\.innerHTML = '';/);
 });
 
+test('the shareable link keeps the page offline and cannot be turned into an injection', async () => {
+  // The permalink is the one feature that reads an attacker-controlled string
+  // (the URL hash) back into the page. Two properties keep it honest, and both
+  // are the kind that pass a smoke test and rot silently, so pin them here.
+  const app = await readFile(join(root, 'public/app.mjs'), 'utf8');
+
+  // 1. The site's headline promise is "nothing is sent anywhere". Sharing must
+  //    stay local: the clipboard and history, never fetch/XHR/beacon/WebSocket.
+  //    (The bundle import is a static ES import, not a runtime network call.)
+  for (const sink of ['fetch(', 'XMLHttpRequest', 'sendBeacon', 'new WebSocket', 'new EventSource']) {
+    assert.ok(!app.includes(sink), `app.mjs reaches the network via ${sink}, breaking the offline promise`);
+  }
+  assert.match(app, /navigator\.clipboard\.writeText/, 'the copy button no longer uses the clipboard');
+  assert.match(app, /history\.replaceState/, 'the URL sync no longer uses replaceState, so typing floods history');
+
+  // 2. Hash values are attacker-controlled. They may only ever land on
+  //    input.value; assigning any of them to innerHTML would make a crafted link
+  //    an XSS vector. Every hash read (p.get) must flow to .value, never markup.
+  const readsHash = app.includes('URLSearchParams') && app.includes('location.hash');
+  assert.ok(readsHash, 'the permalink no longer reads the hash, so this guard is testing nothing');
+  assert.match(app, /el\.value = p\.get\(el\.id\)/, 'hash values must be assigned to input.value only');
+  // A regex is a blunt instrument, but "p.get(...) used to build innerHTML" is
+  // exactly the mistake worth refusing outright.
+  assert.doesNotMatch(app, /innerHTML\s*=\s*[^;]*p\.get/, 'a hash value flows into innerHTML: crafted links become XSS');
+});
+
 test('the published copies are in step with the sources they were built from', async () => {
   // Running the build is part of shipping. A stale public/ means the site and
   // the repo disagree about what the code does, silently.
