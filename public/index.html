@@ -194,6 +194,7 @@
         <button role="tab" id="tab-bill" aria-controls="pane-bill" aria-selected="false">bill yield</button>
         <button role="tab" id="tab-bond" aria-controls="pane-bond" aria-selected="false">duration</button>
         <button role="tab" id="tab-loan" aria-controls="pane-loan" aria-selected="false">loan</button>
+        <button role="tab" id="tab-cmp" aria-controls="pane-cmp" aria-selected="false">compare</button>
       </div>
 
       <div class="pane" id="pane-days" role="tabpanel" aria-labelledby="tab-days">
@@ -291,6 +292,38 @@
             <thead><tr><th scope="col">payment</th><th scope="col" class="n">interest</th><th scope="col" class="n">principal</th><th scope="col" class="n">balance</th></tr></thead>
             <tbody id="l-rows"></tbody>
           </table></div>
+        </div>
+      </div>
+
+      <div class="pane" id="pane-cmp" role="tabpanel" aria-labelledby="tab-cmp" hidden>
+        <div class="grid">
+          <div><label for="c-a-rate">offer A rate %</label><input id="c-a-rate" type="number" value="5.00" step="0.01"></div>
+          <div>
+            <label for="c-a-freq">A compounding</label>
+            <select id="c-a-freq">
+              <option value="1">annual</option><option value="2">semi-annual</option>
+              <option value="4">quarterly</option><option value="12">monthly</option>
+              <option value="365">daily</option><option value="inf">continuous</option>
+            </select>
+          </div>
+          <div><label for="c-b-rate">offer B rate %</label><input id="c-b-rate" type="number" value="4.95" step="0.01"></div>
+          <div>
+            <label for="c-b-freq">B compounding</label>
+            <select id="c-b-freq">
+              <option value="1">annual</option><option value="2">semi-annual</option>
+              <option value="4">quarterly</option><option value="12" selected>monthly</option>
+              <option value="365">daily</option><option value="inf">continuous</option>
+            </select>
+          </div>
+        </div>
+        <div class="out">
+          <div class="big" id="c-winner">—</div>
+          <p class="sub" style="margin:4px 0 16px">the one that actually pays more, on an effective annual basis</p>
+          <div class="scroll"><table>
+            <thead><tr><th scope="col">offer</th><th scope="col" class="n">nominal</th><th scope="col" class="n">compounding</th><th scope="col" class="n">effective annual</th></tr></thead>
+            <tbody id="c-rows"></tbody>
+          </table></div>
+          <p class="warn" id="c-note"></p>
         </div>
       </div>
     </div>

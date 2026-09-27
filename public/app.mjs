@@ -207,6 +207,46 @@ function renderLoan() {
   }).join('');
 }
 
+/* compare */
+function renderCompare() {
+  const freqLabel = { 1: 'annual', 2: 'semi-annual', 4: 'quarterly', 12: 'monthly', 365: 'daily', inf: 'continuous' };
+  const read = (which) => {
+    const nominal = +$(`c-${which}-rate`).value / 100;
+    const sel = $(`c-${which}-freq`).value;
+    const m = sel === 'inf' ? Infinity : +sel;
+    return { label: `offer ${which.toUpperCase()}`, nominal, m, freq: freqLabel[sel], ear: effectiveAnnualRate(nominal, m) };
+  };
+  const a = read('a'), b = read('b');
+
+  /* The whole point: rank on effective annual rate, not the nominal in the ad.
+     A tie is real (same rate, same frequency) and must not be printed as a
+     winner. */
+  const tie = Math.abs(a.ear - b.ear) < 1e-12;
+  const win = tie ? null : a.ear > b.ear ? a : b;
+  const lose = win === a ? b : win === b ? a : null;
+
+  $('c-winner').textContent = tie ? 'a tie' : `${win.label} wins`;
+
+  $('c-rows').innerHTML = [a, b].map((o) => {
+    const hit = !tie && o === win ? ' class="hit"' : '';
+    return `<tr${hit}><td>${o.label}</td><td class="n">${pct(o.nominal, 3)}</td><td class="n">${o.freq}</td><td class="n">${pct(o.ear, 4)}</td></tr>`;
+  }).join('');
+
+  /* Only worth a headline when the higher effective rate has the LOWER nominal:
+     that is the counterintuitive case the whole tab exists to surface. */
+  if (tie) {
+    $('c-note').textContent = 'identical effective rates. compounding makes no difference here.';
+  } else if (win.nominal < lose.nominal) {
+    const bp = (win.ear - lose.ear) * 10000;
+    $('c-note').textContent =
+      `${win.label} quotes the lower nominal rate and still pays more: compounded ${win.freq}, ` +
+      `it earns ${bp.toFixed(1)} bp more per year. the rate in the ad is not the rate you get.`;
+  } else {
+    const bp = (win.ear - lose.ear) * 10000;
+    $('c-note').textContent = `${win.label} pays ${bp.toFixed(1)} bp more per year on an effective basis.`;
+  }
+}
+
 /* ids: what re-renders on change. message: where the reason goes. stale: the
    regions that must be cleared so no superseded number survives an error. */
 const wire = (ids, fn, message, stale = []) => {
@@ -220,3 +260,4 @@ wire(['a-principal', 'a-rate', 'a-from', 'a-to', 'a-comp'], renderAccrue, $('a-i
 wire(['b-face', 'b-price', 'b-settle', 'b-mat'], renderBill, $('b-inv'), [$('b-kv')]);
 wire(['n-face', 'n-coupon', 'n-yield', 'n-years', 'n-freq'], renderBond, $('n-price'), [$('n-kv'), $('n-rows')]);
 wire(['l-principal', 'l-rate', 'l-years', 'l-freq', 'l-extra'], renderLoan, $('l-payment'), [$('l-kv'), $('l-save'), $('l-rows')]);
+wire(['c-a-rate', 'c-a-freq', 'c-b-rate', 'c-b-freq'], renderCompare, $('c-winner'), [$('c-rows'), $('c-note')]);
