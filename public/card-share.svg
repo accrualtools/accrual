@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Every calculation on accrual.tools is now a shareable link: the whole state rides in the URL, and pasting it reopens the exact same numbers, offline">
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+
+  <text x="96" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87" letter-spacing="3">SHAREABLE LINKS / IN THE URL / OFFLINE</text>
+
+  <text x="96" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="64" fill="#D8E0DD">every calculation is a link.</text>
+  <text x="96" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34" fill="#7B8B87">paste it, and it opens on the exact same numbers.</text>
+
+  <!-- the link itself, in a browser-address-bar frame -->
+  <rect x="96" y="312" width="1408" height="88" rx="10" fill="#111716" stroke="#1E2826" stroke-width="2"/>
+  <!-- padlock: local, nothing sent -->
+  <g>
+    <rect x="132" y="352" width="16" height="13" rx="2" fill="#B8FF3C"/>
+    <path d="M135 352v-4a5 5 0 0 1 10 0v4" fill="none" stroke="#B8FF3C" stroke-width="2.5"/>
+  </g>
+  <text x="176" y="367" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28" fill="#D8E0DD">accrual.tools/#t=cmp&amp;c-a-rate=5.00&amp;c-a-freq=1&amp;c-b-rate=4.95&amp;c-b-freq=12</text>
+
+  <!-- what that link resolves to, so the card carries the payoff, not just the mechanism -->
+  <rect x="96" y="444" width="1408" height="212" rx="12" fill="#111716" stroke="#1E2826" stroke-width="2"/>
+  <text x="128" y="504" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" fill="#B8FF3C">offer B wins</text>
+  <text x="128" y="548" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87">the one that actually pays more, on an effective annual basis</text>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25">
+    <text x="128" y="602" fill="#7B8B87">offer A</text>
+    <text x="470" y="602" fill="#D8E0DD">5.000%</text>
+    <text x="720" y="602" fill="#D8E0DD">annual</text>
+    <text x="1000" y="602" fill="#D8E0DD">5.0000% effective</text>
+
+    <text x="128" y="640" fill="#B8FF3C">offer B</text>
+    <text x="470" y="640" fill="#B8FF3C">4.950%</text>
+    <text x="720" y="640" fill="#B8FF3C">monthly</text>
+    <text x="1000" y="640" fill="#B8FF3C">5.0639% effective</text>
+  </g>
+
+  <rect x="96" y="700" width="1408" height="2" fill="#1E2826"/>
+
+  <text x="96" y="758" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="29" fill="#D8E0DD">the whole state rides in the url. no server, no account, nothing leaves the page.</text>
+  <text x="96" y="800" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">a crafted link can change the numbers. it cannot inject anything.</text>
+
+  <text x="1504" y="800" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#B8FF3C">accrual</text>
+</svg>
