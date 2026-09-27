@@ -193,6 +193,7 @@
         <button role="tab" id="tab-accrue" aria-controls="pane-accrue" aria-selected="false">accrual</button>
         <button role="tab" id="tab-bill" aria-controls="pane-bill" aria-selected="false">bill yield</button>
         <button role="tab" id="tab-bond" aria-controls="pane-bond" aria-selected="false">duration</button>
+        <button role="tab" id="tab-loan" aria-controls="pane-loan" aria-selected="false">loan</button>
       </div>
 
       <div class="pane" id="pane-days" role="tabpanel" aria-labelledby="tab-days">
@@ -269,6 +270,29 @@
           </table></div>
         </div>
       </div>
+
+      <div class="pane" id="pane-loan" role="tabpanel" aria-labelledby="tab-loan" hidden>
+        <div class="grid">
+          <div><label for="l-principal">principal</label><input id="l-principal" type="number" value="200000" step="1000" min="0"></div>
+          <div><label for="l-rate">rate %</label><input id="l-rate" type="number" value="6" step="0.125"></div>
+          <div><label for="l-years">years</label><input id="l-years" type="number" value="30" step="1" min="0.5"></div>
+          <div>
+            <label for="l-freq">payments / year</label>
+            <select id="l-freq"><option value="12" selected>12</option><option value="4">4</option><option value="2">2</option><option value="1">1</option></select>
+          </div>
+          <div><label for="l-extra">extra / payment</label><input id="l-extra" type="number" value="200" step="50" min="0"></div>
+        </div>
+        <div class="out">
+          <div class="big" id="l-payment">—</div>
+          <p class="sub" style="margin:4px 0 16px">level payment, principal and interest</p>
+          <div id="l-kv"></div>
+          <p class="warn" id="l-save"></p>
+          <div class="scroll"><table>
+            <thead><tr><th scope="col">payment</th><th scope="col" class="n">interest</th><th scope="col" class="n">principal</th><th scope="col" class="n">balance</th></tr></thead>
+            <tbody id="l-rows"></tbody>
+          </table></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -303,11 +327,11 @@ accrueSimple({
 
 <section>
   <div class="wrap">
-    <h2>don't trust this page</h2>
+    <h2>check it yourself</h2>
     <p class="sub">
-      Every number above is a claim, and a claim you cannot check is just
-      marketing. These four commands check them. They take about a minute and none
-      of them ask you to believe me.
+      Every number above is a claim, and the good news is you don't have to take
+      my word for any of it. These four commands verify them in about a minute.
+      Nothing here asks for your trust, only a terminal.
     </p>
     <div class="stack">
 <pre><span class="c">// the zero-dependency claim, in the install output itself</span>

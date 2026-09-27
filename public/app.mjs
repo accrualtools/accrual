@@ -2,6 +2,7 @@ import {
   CONVENTIONS, compareConventions, actualDays,
   accrueSimple, accrueCompound, effectiveAnnualRate,
   billYields, bondMetrics, priceShock,
+  levelPayment, amortisationSchedule, payoffWithExtra,
 } from '/accrual.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -156,6 +157,56 @@ function renderBond() {
   }).join('');
 }
 
+/* loan */
+function renderLoan() {
+  const principal = +$('l-principal').value;
+  const rate = +$('l-rate').value / 100;
+  const years = +$('l-years').value;
+  const m = +$('l-freq').value;
+  const extra = +$('l-extra').value;
+
+  const s = amortisationSchedule({ principal, rate, years, periodsPerYear: m });
+  $('l-payment').textContent = fmt(s.payment);
+  kv($('l-kv'), [
+    ['payments', s.periods],
+    ['total paid', fmt(s.totalPaid)],
+    ['total interest', fmt(s.totalInterest)],
+    /* Safe: amortisationSchedule refuses a principal of zero before we reach here. */
+    ['interest as % of principal', pct(s.totalInterest / principal, 1)],
+  ]);
+
+  /* The single most useful number in consumer finance, and almost nobody is
+     shown it: what overpaying every period is worth. payoffWithExtra rejects a
+     zero extra, so ask only when there is one, and say plainly when there isn't. */
+  if (extra > 0) {
+    const p = payoffWithExtra({ principal, rate, years, periodsPerYear: m, extraPayment: extra });
+    $('l-save').textContent =
+      `paying ${fmt(extra)} more each period clears it ${p.yearsSaved.toFixed(1)} years early ` +
+      `and saves ${fmt(p.interestSaved)} in interest.`;
+  } else {
+    $('l-save').textContent = 'add an amount above to see what overpaying saves.';
+  }
+
+  /* The whole schedule is every period; showing all 360 rows buries the shape.
+     The first year, the last year, and the halfway point tell the story: early
+     payments are almost all interest, late payments almost all principal. */
+  const rows = s.rows;
+  const marks = new Set([
+    ...[0, 1, 2, 3, 4, 5].filter((i) => i < rows.length),
+    Math.floor(rows.length / 2),
+    ...[rows.length - 2, rows.length - 1].filter((i) => i >= 0),
+  ]);
+  const picked = [...marks].sort((a, b) => a - b);
+  let prev = -1;
+  $('l-rows').innerHTML = picked.map((i) => {
+    const row = rows[i];
+    const gap = i - prev > 1 ? `<tr><td colspan="4" style="color:var(--dim);text-align:center">payment ${prev + 2} … ${i}</td></tr>` : '';
+    prev = i;
+    return gap +
+      `<tr><td>${i + 1}</td><td class="n">${fmt(row.interest)}</td><td class="n">${fmt(row.principal)}</td><td class="n">${fmt(row.balance)}</td></tr>`;
+  }).join('');
+}
+
 /* ids: what re-renders on change. message: where the reason goes. stale: the
    regions that must be cleared so no superseded number survives an error. */
 const wire = (ids, fn, message, stale = []) => {
@@ -168,3 +219,4 @@ wire(['d-from', 'd-to'], renderDays, $('d-spread'), [$('d-rows')]);
 wire(['a-principal', 'a-rate', 'a-from', 'a-to', 'a-comp'], renderAccrue, $('a-interest'), [$('a-kv'), $('a-rows')]);
 wire(['b-face', 'b-price', 'b-settle', 'b-mat'], renderBill, $('b-inv'), [$('b-kv')]);
 wire(['n-face', 'n-coupon', 'n-yield', 'n-years', 'n-freq'], renderBond, $('n-price'), [$('n-kv'), $('n-rows')]);
+wire(['l-principal', 'l-rate', 'l-years', 'l-freq', 'l-extra'], renderLoan, $('l-payment'), [$('l-kv'), $('l-save'), $('l-rows')]);
