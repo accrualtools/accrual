@@ -793,9 +793,17 @@ export function rateFromPayment({
 
   const n = loanWholePeriods(Math.round(years * periodsPerYear * 1e8) / 1e8);
 
+  // Payments that exactly retire the principal are a 0% loan ("0% financing"),
+  // a real and common offer. This used to fall into the refusal below and tell
+  // the borrower it "cannot repay", which is false. The tolerance absorbs the
+  // float residue of a payment like 25000/60 multiplied back out.
+  if (Math.abs(payment * n - principal) <= 1e-9 * principal) {
+    return { rate: 0, periodicRate: 0, iterations: 0, totalPaid: principal, totalInterest: 0 };
+  }
+
   // Below this the loan can never be repaid: the payments do not even cover
   // the principal, let alone interest.
-  if (payment * n <= principal) {
+  if (payment * n < principal) {
     throw new RangeError(
       `payment ${payment} over ${n} periods totals ${payment * n}, which cannot repay ${principal}`,
     );

@@ -190,6 +190,29 @@ test('rateFromPayment refuses a payment stream that cannot repay', () => {
   );
 });
 
+test('rateFromPayment reads 0% financing as 0%, not as a loan that cannot repay', () => {
+  // 12 x 1,000 on 12,000 used to throw "cannot repay 12000". It repays exactly.
+  const r = rateFromPayment({ principal: 12_000, payment: 1_000, years: 1 });
+  assert.equal(r.rate, 0);
+  cents(r.totalInterest, '0.00');
+  // float residue: 25000/60 multiplied back out must still be 0%
+  assert.equal(rateFromPayment({ principal: 25_000, payment: 25_000 / 60, years: 5 }).rate, 0);
+  // one cent short is still a refusal
+  assert.throws(() => rateFromPayment({ principal: 12_000, payment: 999.99, years: 1 }), /cannot repay/);
+});
+
+test('a flat rate quote is roughly half the real rate it charges', () => {
+  // "5% flat" on 25,000 over 5 years: interest 5% x 25,000 x 5 = 6,250 up front,
+  // spread over 60 payments of 520.83. Flat interest is charged on the full
+  // principal even as it is repaid, so the true nominal rate is ~9.1%, and the
+  // true rate is what levelPayment needs to reproduce the same payment.
+  const payment = (25_000 + 0.05 * 25_000 * 5) / 60;
+  const r = rateFromPayment({ principal: 25_000, payment, years: 5 });
+  assert.ok(r.rate > 0.09 && r.rate < 0.0925, `true rate ${r.rate}`);
+  const back = levelPayment({ principal: 25_000, rate: r.rate, years: 5 });
+  assert.ok(Math.abs(back.payment - payment) < 1e-6, `payment ${back.payment} vs ${payment}`);
+});
+
 test('rateFromPayment exposes a punitive rate honestly', () => {
   // 1,000 borrowed, 150 a month for 12 months. Solved independently at
   // 40-digit precision: monthly 0.1044810922, nominal 125.3773%.

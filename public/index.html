@@ -181,7 +181,7 @@
       <div><dt>conventions implemented</dt><dd>6</dd></div>
       <div><dt>30/360 variants</dt><dd>3, not interchangeable</dd></div>
       <div><dt>runtime dependencies</dt><dd>0</dd></div>
-      <div><dt>tests passing</dt><dd>156 / 156</dd></div>
+      <div><dt>tests passing</dt><dd>158 / 158</dd></div>
     </dl>
   </div>
 </section>
@@ -202,6 +202,7 @@
         <button role="tab" id="tab-bond" aria-controls="pane-bond" aria-selected="false">duration</button>
         <button role="tab" id="tab-loan" aria-controls="pane-loan" aria-selected="false">loan</button>
         <button role="tab" id="tab-cmp" aria-controls="pane-cmp" aria-selected="false">compare</button>
+        <button role="tab" id="tab-rate" aria-controls="pane-rate" aria-selected="false">true rate</button>
       </div>
 
       <div class="sharebar">
@@ -336,6 +337,24 @@
             <tbody id="c-rows"></tbody>
           </table></div>
           <p class="warn" id="c-note"></p>
+        </div>
+      </div>
+
+      <div class="pane" id="pane-rate" role="tabpanel" aria-labelledby="tab-rate" hidden>
+        <div class="grid">
+          <div><label for="r-principal">amount borrowed</label><input id="r-principal" type="number" value="25000" step="100" min="0"></div>
+          <div><label for="r-payment">payment</label><input id="r-payment" type="number" value="520.83" step="0.01" min="0"></div>
+          <div><label for="r-years">years</label><input id="r-years" type="number" value="5" step="1" min="0.5"></div>
+          <div>
+            <label for="r-freq">payments / year</label>
+            <select id="r-freq"><option value="12" selected>12</option><option value="4">4</option><option value="2">2</option><option value="1">1</option></select>
+          </div>
+        </div>
+        <div class="out">
+          <div class="big" id="r-rate">—</div>
+          <p class="sub" style="margin:4px 0 16px">the rate you are actually paying, solved from the payment</p>
+          <div id="r-kv"></div>
+          <p class="warn" id="r-note"></p>
         </div>
       </div>
     </div>

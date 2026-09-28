@@ -21,7 +21,7 @@ which is the claim you can check fastest.
 
     npm ls --all          # the dependency tree, one entry deep
     npm audit signatures  # who built the tarball, and from which commit
-    npm test              # 156 tests, in the repo
+    npm test              # 158 tests, in the repo
 
 The tests also run on every push to main, on Node 20 and 22, at
 https://github.com/accrualtools/accrual/actions/workflows/tests.yml
@@ -100,7 +100,7 @@ a sibling note says why.
 
 ## Verification
 
-156 tests. Run `npm test`.
+158 tests. Run `npm test`.
 
 The library: hand-traced expected values for the 30/360 variants, round-trip
 checks between accrual and present value, a check that convexity genuinely

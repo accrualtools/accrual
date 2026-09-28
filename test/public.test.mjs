@@ -104,7 +104,7 @@ test('every calculator clears its detail regions when a render fails', async () 
   // wiring: each wire() call must name the regions to blank.
   const app = await readFile(join(root, 'public/app.mjs'), 'utf8');
   const calls = [...app.matchAll(/^wire\(\[([^\]]*)\],\s*(\w+),\s*([^\n]*)$/gm)];
-  assert.equal(calls.length, 6, `expected six wired calculators, found ${calls.length}`);
+  assert.equal(calls.length, 7, `expected seven wired calculators, found ${calls.length}`);
   for (const [line, , fn, rest] of calls) {
     assert.match(
       rest,

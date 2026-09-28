@@ -2,7 +2,7 @@ import {
   CONVENTIONS, compareConventions, actualDays,
   accrueSimple, accrueCompound, effectiveAnnualRate,
   billYields, bondMetrics, priceShock,
-  levelPayment, amortisationSchedule, payoffWithExtra,
+  levelPayment, amortisationSchedule, payoffWithExtra, rateFromPayment,
 } from '/accrual.mjs';
 
 const $ = (id) => document.getElementById(id);
@@ -247,6 +247,35 @@ function renderCompare() {
   }
 }
 
+/* true rate: the offer states a payment, not a rate. Solve for the rate. */
+function renderRate() {
+  const principal = +$('r-principal').value;
+  const payment = +$('r-payment').value;
+  const years = +$('r-years').value;
+  const m = +$('r-freq').value;
+
+  const r = rateFromPayment({ principal, payment, years, periodsPerYear: m });
+  $('r-rate').textContent = pct(r.rate, 3);
+
+  /* "Flat" is how instalment offers are often quoted: interest on the full
+     amount for the whole term, even though the balance falls every payment.
+     Showing the flat figure beside the solved rate is the point of this tab. */
+  const flat = r.totalInterest / (principal * years);
+  kv($('r-kv'), [
+    ['payments', Math.round(years * m)],
+    ['total paid', fmt(r.totalPaid)],
+    ['total interest', fmt(r.totalInterest)],
+    ['nominal annual rate (APR)', pct(r.rate, 3)],
+    ['effective annual rate', pct(effectiveAnnualRate(r.rate, m), 3)],
+    ['same deal quoted "flat"', pct(flat, 3)],
+  ]);
+
+  $('r-note').textContent = r.rate === 0
+    ? 'the payments repay exactly what was borrowed. this really is 0%.'
+    : `quoted flat this is ${pct(flat, 2)}. the balance falls every payment but the interest does not, ` +
+      `so the rate you pay is ${pct(r.rate, 2)}, ${(r.rate / flat).toFixed(2)}× the flat figure.`;
+}
+
 /* ids: what re-renders on change. message: where the reason goes. stale: the
    regions that must be cleared so no superseded number survives an error. */
 const wire = (ids, fn, message, stale = []) => {
@@ -261,6 +290,7 @@ wire(['b-face', 'b-price', 'b-settle', 'b-mat'], renderBill, $('b-inv'), [$('b-k
 wire(['n-face', 'n-coupon', 'n-yield', 'n-years', 'n-freq'], renderBond, $('n-price'), [$('n-kv'), $('n-rows')]);
 wire(['l-principal', 'l-rate', 'l-years', 'l-freq', 'l-extra'], renderLoan, $('l-payment'), [$('l-kv'), $('l-save'), $('l-rows')]);
 wire(['c-a-rate', 'c-a-freq', 'c-b-rate', 'c-b-freq'], renderCompare, $('c-winner'), [$('c-rows'), $('c-note')]);
+wire(['r-principal', 'r-payment', 'r-years', 'r-freq'], renderRate, $('r-rate'), [$('r-kv'), $('r-note')]);
 
 /* Shareable permalinks. A calculation is only worth showing someone if they can
    see the same numbers, so the whole state — which tab, every field in it —
