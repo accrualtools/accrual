@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="A loan quoted at 5% flat really costs 9.15% a year: 25,000.00 over 5 years at 520.83 a month. Solved from the payment on accrual.tools">
+  <rect width="1600" height="900" fill="#0B0F0E"/>
+  <text x="96" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#7B8B87" letter-spacing="3">TRUE RATE / SOLVED FROM THE PAYMENT / OFFLINE</text>
+  <text x="96" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="64" fill="#D8E0DD">"5% flat" is really 9.15%.</text>
+  <text x="96" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34" fill="#7B8B87">25,000.00 over 5 years, 60 payments of 520.83.</text>
+  <rect x="96" y="312" width="1408" height="344" rx="12" fill="#111716" stroke="#1E2826" stroke-width="2"/>
+  <text x="128" y="372" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">as quoted (flat)</text>
+  <rect x="128" y="392" width="546" height="44" rx="4" fill="#2A3633"/>
+  <text x="1472" y="426" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" fill="#D8E0DD" text-anchor="end">5.000%</text>
+  <text x="128" y="500" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#B8FF3C">what you actually pay (APR)</text>
+  <rect x="128" y="520" width="1000" height="44" rx="4" fill="#B8FF3C"/>
+  <text x="1472" y="554" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" fill="#B8FF3C" text-anchor="end">9.154%</text>
+  <text x="128" y="620" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" fill="#7B8B87">effective annual 9.548% · total interest 6,249.80 · 1.83x the flat figure</text>
+  <rect x="96" y="700" width="1408" height="2" fill="#1E2826"/>
+  <text x="96" y="758" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="29" fill="#D8E0DD">flat interest is charged on the full amount, even as you pay it back.</text>
+  <text x="96" y="800" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" fill="#7B8B87">type the payment, get the rate. runs in your browser.</text>
+  <text x="1504" y="800" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26" fill="#B8FF3C" text-anchor="end">accrual</text>
+</svg>
